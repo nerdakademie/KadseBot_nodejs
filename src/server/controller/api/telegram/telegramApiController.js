@@ -1,4 +1,4 @@
-const TelegramHelper = require('../../../helper/TelegramHelper')
+const TelegramHelper = require('../../../helper/TelegramHelper');
 module.exports = (() => {
   function sendMessage(request, response) {
     const json = request.body;

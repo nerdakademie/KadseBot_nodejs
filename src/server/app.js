@@ -48,7 +48,6 @@ app.use(publicWebpackDevMiddleware);
 app.use(webpackHotMiddleware(compiler));
 
 require('mongoose').connect(config.get('db-url'));
-require('./model/productModel');
 require('./model/userModel');
 require('./model/statisticModel');
 
