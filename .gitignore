@@ -1,0 +1,6 @@
+/.idea/
+/node_modules/
+/out/
+/resources/server/public/css/
+/resources/server/public/js/
+/target/
