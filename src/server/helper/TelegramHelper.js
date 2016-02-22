@@ -86,14 +86,14 @@ module.exports = (() => {
     var i = 1;
     function engageLoop () {
        setTimeout(function () {
-          alert('hello')bot.sendMessage(chatID,message);
+          bot.sendMessage(chatID,message);
           i++;
           if (i < 6) {
              engageLoop();
           }
        }, 1000)
     }
-    myLoop();
+    engageLoop();
   //    bot.sendMessage(chatID,message);
   }
 
