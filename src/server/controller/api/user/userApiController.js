@@ -1,4 +1,5 @@
 const User = require('mongoose').model('User');
+const $ = require('jquery');
 
 module.exports = (() => {
 
@@ -8,7 +9,7 @@ module.exports = (() => {
       if (count > 0) {
         response.json({status: 'failed'});
       } else {
-        // user.nak_pass = new Buffer(user.nak_pass).toString('base64');
+        // TODO Login überprüfen
         user.save((error) => {
           if (error) {
             response.json({status: 'error'});

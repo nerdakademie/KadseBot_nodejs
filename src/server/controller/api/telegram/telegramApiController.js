@@ -6,10 +6,6 @@ module.exports = (() => {
     response.end();
   }
 
-  function waitForMessage(request, response) {
-    TelegramHelper.waitForMessage(request.body.message, request.body.callback);
-    response.end();
-  }
 
   function webHook(request, response) {
     const json = request.body;
@@ -19,7 +15,6 @@ module.exports = (() => {
 
   return {
     sendMessage,
-    waitForMessage,
     webHook
   };
 })();

@@ -20,7 +20,9 @@ class LoginForm extends React.Component {
       if(data.success) {
         location.reload();
       } else {
-
+        $('#user').addClass('error');
+        $('#pass').addClass('error');
+        $('#pass').val('');
       }
     });
   }

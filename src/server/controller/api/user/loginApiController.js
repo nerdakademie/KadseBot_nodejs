@@ -10,7 +10,7 @@ module.exports = (() => {
       response.end();
     } else {
       userHelper.getUserByName(request.body.username, function(user) {
-        if (user == []) {
+        if (user == null) {
           response.json({success: false});
         }
         else if (user.nak_pass === request.body.password) {

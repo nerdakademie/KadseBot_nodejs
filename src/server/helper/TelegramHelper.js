@@ -29,25 +29,24 @@ module.exports = (() => {
   }
 
   function executeCommand(JsonData) {
-    const parsedJson = JSON.parse(JsonData);
-    incrementUsage(parsedJson);
-    const command = getCommand(parsedJson.message.text);
+    incrementUsage(JsonData);
+    const command = getCommand(JsonData.message.text);
     switch (command) {
       case '/echo':
-        bot.sendMessage(parsedJson.message.chat.id, getParams(parsedJson).join(' '));
+        bot.sendMessage(JsonData.message.chat.id, getParams(parsedJson).join(' '));
         break;
       case '/debug':
-        bot.sendMessage(parsedJson.message.chat.id, JsonData);
+        bot.sendMessage(JsonData.message.chat.id, JsonData);
         break;
       case '/decide':
-        bot.sendMessage(parsedJson.message.chat.id, decide(getParams(parsedJson)));
+        bot.sendMessage(JsonData.message.chat.id, decide(getParams(JsonData)));
         break;
       case '/ohkadsewasessenwirheute':
-        bot.sendMessage(parsedJson.message.chat.id, decide(['Mensa', 'Fresh', 'Smileys', 'Penny', 'Dinos', 'Hack']));
+        bot.sendMessage(JsonData.message.chat.id, decide(['Mensa', 'Fresh', 'Smileys', 'Penny', 'Dinos', 'Hack']));
         break;
 
       default:
-        bot.sendMessage(parsedJson.message.chat.id, 'Kadse verwirrt. Kadse kennt nicht');
+        bot.sendMessage(JsonData.message.chat.id, 'Kadse verwirrt. Kadse kennt nicht');
         break;
     }
   }
