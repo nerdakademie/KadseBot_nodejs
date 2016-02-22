@@ -84,7 +84,11 @@ module.exports = (() => {
 
   function engage(chatID, message){
     for (let counter = 0; counter < 5; counter++){
-      bot.sendMessage(chatID,message);
+      setTimeout(function(){
+        bot.sendMessage(chatID,message);
+      },1000	)
+
+  //    bot.sendMessage(chatID,message);
     }
   }
 
