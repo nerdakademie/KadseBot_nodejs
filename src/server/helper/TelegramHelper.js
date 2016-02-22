@@ -29,7 +29,7 @@ module.exports = (() => {
   }
 
   function executeCommand(JsonData) {
-    incrementUsage(JsonData);
+ //   incrementUsage(JsonData);
     const command = getCommand(JsonData.message.text);
     switch (command) {
       case '/echo':
