@@ -40,7 +40,7 @@ module.exports = (() => {
         bot.sendMessage(JsonData.message.chat.id, getParams(JsonData.message.text).join(' '));
         break;
       case '/debug':
-        bot.sendMessage(JsonData.message.chat.id, JSON.stringify(JsonData.message.text));
+        bot.sendMessage(JsonData.message.chat.id, JSON.stringify(JsonData));
         break;
       case '/decide':
         bot.sendMessage(JsonData.message.chat.id, decide(getParams(JsonData.message.text)));
@@ -86,7 +86,7 @@ module.exports = (() => {
     let i = 1;
     function engageLoop () {
        setTimeout(function () {
-          bot.sendMessage(chatID,'Miau: '.concat(message));
+          bot.sendMessage(chatID, 'Meow '.concat(message));
           i++;
           if (i < 6) {
              engageLoop();
