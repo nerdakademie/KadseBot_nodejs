@@ -24,9 +24,7 @@ module.exports = (() => {
   }
 
   function getParams(inputData) {
-    console.log(inputData);
     const params = inputData.split(' ');
-    console.log(params.slice(1));
     if (contains(inputData, ' @'.concat(botName))) {
       return params.slice(2);
     } else {
@@ -58,8 +56,8 @@ module.exports = (() => {
   }
 
   function decide(Params) {
-    if (Params.size > 0) {
-      return Params[generateRandomNumber(0, Params.size)];
+    if (Params.length > 0) {
+      return Params[generateRandomNumber(0, Params.length)];
     } else {
       return errorMessage('No options specified');
     }
