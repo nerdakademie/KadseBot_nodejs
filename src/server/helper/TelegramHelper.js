@@ -83,14 +83,20 @@ module.exports = (() => {
   }
 
   function engage(chatID, message){
-    for (let counter = 0; counter < 5; counter++){
-      setTimeout(function(){
-        bot.sendMessage(chatID,message);
-      },1000	)
-
-  //    bot.sendMessage(chatID,message);
+    var i = 1;
+    function engageLoop () {
+       setTimeout(function () {
+          alert('hello')bot.sendMessage(chatID,message);
+          i++;
+          if (i < 6) {
+             engageLoop();
+          }
+       }, 1000)
     }
+    myLoop();
+  //    bot.sendMessage(chatID,message);
   }
+
 
   // Timeout in milliseconds
   function waitForMessage(userID, callback) {
