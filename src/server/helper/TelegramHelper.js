@@ -37,13 +37,13 @@ module.exports = (() => {
     const command = getCommand(JsonData.message.text);
     switch (command) {
       case '/echo':
-        bot.sendMessage(JsonData.message.chat.id, getParams(JsonData).join(' '));
+        bot.sendMessage(JsonData.message.chat.id, getParams(JsonData.message.text).join(' '));
         break;
       case '/debug':
-        bot.sendMessage(JsonData.message.chat.id, JSON.stringify(JsonData));
+        bot.sendMessage(JsonData.message.chat.id, JSON.stringify(JsonData.message.text));
         break;
       case '/decide':
-        bot.sendMessage(JsonData.message.chat.id, decide(getParams(JsonData)));
+        bot.sendMessage(JsonData.message.chat.id, decide(getParams(JsonData.message.text)));
         break;
       case '/ohkadsewasessenwirheute':
         bot.sendMessage(JsonData.message.chat.id, decide(['Mensa', 'Fresh', 'Smileys', 'Penny', 'Dinos', 'Hack']));
