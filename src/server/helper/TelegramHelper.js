@@ -8,12 +8,16 @@ module.exports = (() => {
 
   const botName = 'KadseBot';
 
+  function contains(origstring, compare){
+    return origstring.indexOf(compare) > -1;
+  }
+
   function getCommand(inputData) {
     const split = inputData.split(' ');
     let command = split[0];
-    if (command.contains('@'.concat(botName))) {
+    if (contains(command, '@'.concat(botName))) {
       return command.replace('@'.concat(botName), '');
-    } else if (command.contains(' @'.concat(botName))) {
+    } else if (contains(command, ' @'.concat(botName))) {
       return command.replace(' @'.concat(botName), '');
     }
     return command;
