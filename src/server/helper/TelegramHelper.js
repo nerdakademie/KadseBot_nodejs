@@ -14,7 +14,7 @@ module.exports = (() => {
 
   function getCommand(inputData) {
     const split = inputData.split(' ');
-    let command = split[0];
+    let command = split[0].toLowerCase();
     if (contains(command, '@'.concat(botName))) {
       return command.replace('@'.concat(botName), '');
     } else if (contains(command, ' @'.concat(botName))) {
@@ -83,7 +83,7 @@ module.exports = (() => {
   }
 
   function engage(chatID, message){
-    var i = 1;
+    let i = 1;
     function engageLoop () {
        setTimeout(function () {
           bot.sendMessage(chatID,message);
