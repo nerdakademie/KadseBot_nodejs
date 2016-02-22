@@ -24,7 +24,9 @@ module.exports = (() => {
   }
 
   function getParams(inputData) {
+    console.log(inputData);
     const params = inputData.split(' ');
+    console.log(params);
     if (contains(inputData, ' @'.concat(botName))) {
       return params.slice(2);
     } else {
