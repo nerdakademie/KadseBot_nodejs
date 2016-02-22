@@ -86,7 +86,7 @@ module.exports = (() => {
     let i = 1;
     function engageLoop () {
        setTimeout(function () {
-          bot.sendMessage(chatID,message);
+          bot.sendMessage(chatID,'Miau: '.concat(message));
           i++;
           if (i < 6) {
              engageLoop();
