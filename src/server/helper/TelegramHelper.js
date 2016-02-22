@@ -48,6 +48,9 @@ module.exports = (() => {
       case '/ohkadsewasessenwirheute':
         bot.sendMessage(JsonData.message.chat.id, decide(['Mensa', 'Fresh', 'Smileys', 'Penny', 'Dinos', 'Hack']));
         break;
+      case '/engage':
+        engage(JsonData.message.chat.id, getParams(JsonData.message.text).join(' '));
+        break;
 
       default:
         bot.sendMessage(JsonData.message.chat.id, 'Kadse verwirrt. Kadse kennt nicht');
@@ -77,6 +80,12 @@ module.exports = (() => {
 
   function sendMessage(chatID, Message) {
     bot.sendMessage(chatID, Message);
+  }
+
+  function engage(chatID, message){
+    for (let counter = 0; counter < 5; counter++){
+      bot.sendMessage(chatID,message);
+    }
   }
 
   // Timeout in milliseconds
