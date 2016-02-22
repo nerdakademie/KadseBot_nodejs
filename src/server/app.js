@@ -13,7 +13,6 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackClientDevConfig = require('../../resources/client/webpack/webpack-client-dev.config.js');
 
 const app = express();
-const Threads = require('webworker-threads');
 
 app.disable('x-powered-by');
 
@@ -61,7 +60,5 @@ app.use(`${config.rootPath}/test`, require('./routes/test/testRoutes'));
 
 app.use(require('./routes/errorRoutes'));
 
-const gradesThread = Threads.create();
-gradesThread.eval(require('./threads/gradeThread'));
 
 module.exports = app;
