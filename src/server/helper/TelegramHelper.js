@@ -24,11 +24,11 @@ module.exports = (() => {
   }
 
   function getParams(inputData) {
-    const split = inputData.split(' ');
-    if (inputData.contains(' @'.concat(botName))) {
-      return split.slice(2);
+    const params = inputData.split(' ');
+    if (contains(inputData, ' @'.concat(botName))) {
+      return params.slice(2);
     } else {
-      return split.slice(1);
+      return params.slice(1);
     }
   }
 
@@ -40,7 +40,7 @@ module.exports = (() => {
         bot.sendMessage(JsonData.message.chat.id, getParams(JsonData).join(' '));
         break;
       case '/debug':
-        bot.sendMessage(JsonData.message.chat.id, JsonData);
+        bot.sendMessage(JsonData.message.chat.id, JSON.stringify(JsonData));
         break;
       case '/decide':
         bot.sendMessage(JsonData.message.chat.id, decide(getParams(JsonData)));
