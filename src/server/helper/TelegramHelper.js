@@ -37,7 +37,7 @@ module.exports = (() => {
     const command = getCommand(JsonData.message.text);
     switch (command) {
       case '/echo':
-        bot.sendMessage(JsonData.message.chat.id, getParams(parsedJson).join(' '));
+        bot.sendMessage(JsonData.message.chat.id, getParams(JsonData).join(' '));
         break;
       case '/debug':
         bot.sendMessage(JsonData.message.chat.id, JsonData);
