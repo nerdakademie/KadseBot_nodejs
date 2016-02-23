@@ -57,6 +57,9 @@ module.exports = (() => {
         engage(JsonData.message.chat.id, getParams(JsonData.message.text).join(' '));
         break;
 
+      case 'undefined':
+        bot.sendMessage(JsonData.message.chat.id, errorMessage('No message text supplied'));
+        break;
       default:
         bot.sendMessage(JsonData.message.chat.id, 'Kadse verwirrt. Kadse kennt nicht');
         break;
