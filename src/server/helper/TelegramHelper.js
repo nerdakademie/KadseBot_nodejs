@@ -13,11 +13,9 @@ module.exports = (() => {
 
   function getCommand(inputData) {
     console.log(inputData);
-    let command;
+    let command = inputData.toLowerCase();
     if (contains(inputData, ' ')) {
-      command = inputData.split(' ')[0].toLowerCase();
-    } else {
-      command = inputData;
+      command = command.split(' ')[0];
     }
     if (contains(command, '@'.concat(botName))) {
       return command.replace('@'.concat(botName), '');
@@ -38,7 +36,6 @@ module.exports = (() => {
 
   function executeCommand(JsonData) {
  //   incrementUsage(JsonData);
-    console.log(JSON.stringify(JsonData));
     let command;
     if (typeof JsonData.message.text === 'undefined') {
       command = 'undefined';
@@ -65,6 +62,7 @@ module.exports = (() => {
       case 'undefined':
         bot.sendMessage(JsonData.message.chat.id, errorMessage('No message text supplied'));
         break;
+
       default:
         bot.sendMessage(JsonData.message.chat.id, 'Kadse verwirrt. Kadse kennt nicht');
         break;
