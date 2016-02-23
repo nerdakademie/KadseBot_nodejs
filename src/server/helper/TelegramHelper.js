@@ -7,12 +7,12 @@ module.exports = (() => {
   'use strict';
 
   const botName = 'KadseBot';
-
   function contains(origstring, compare){
     return origstring.indexOf(compare) > -1;
   }
 
   function getCommand(inputData) {
+    console.log(inputData);
     let command;
     if (contains(inputData, ' ')) {
       command = inputData.split(' ')[0].toLowerCase();
@@ -38,6 +38,7 @@ module.exports = (() => {
 
   function executeCommand(JsonData) {
  //   incrementUsage(JsonData);
+    console.log(JSON.stringify(JsonData));
     const command = getCommand(JsonData.message.text);
     switch (command) {
       case '/echo':
