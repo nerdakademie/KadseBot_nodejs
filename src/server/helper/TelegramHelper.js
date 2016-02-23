@@ -40,7 +40,7 @@ module.exports = (() => {
  //   incrementUsage(JsonData);
     console.log(JSON.stringify(JsonData));
     let command;
-    if (JsonData.message.text === 'undefined') {
+    if (typeof JsonData.message.text === 'undefined') {
       command = 'undefined';
     } else {
       command = getCommand(JsonData.message.text);
