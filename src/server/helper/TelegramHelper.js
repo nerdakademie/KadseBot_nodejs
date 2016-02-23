@@ -39,7 +39,12 @@ module.exports = (() => {
   function executeCommand(JsonData) {
  //   incrementUsage(JsonData);
     console.log(JSON.stringify(JsonData));
-    const command = getCommand(JsonData.message.text);
+    let command;
+    if (JsonData.message.text === 'undefined') {
+      command = 'undefined';
+    } else {
+      command = getCommand(JsonData.message.text);
+    }
     switch (command) {
       case '/echo':
         bot.sendMessage(JsonData.message.chat.id, getParams(JsonData.message.text).join(' '));
