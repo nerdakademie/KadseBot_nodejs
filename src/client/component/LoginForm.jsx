@@ -39,7 +39,7 @@ class LoginForm extends React.Component {
             <TextField id="user" floatingLabelText="NAK Benutzername" />
           </div>
           <div className="group">
-            <TextField id="pass" floatingLabelText="NAK Passwort" />
+            <TextField id="pass" floatingLabelText="NAK Passwort" type="password"/>
           </div>
           <button onClick={this.checkLogin} type="button" className="button buttonBlue">Login
             <div className="ripples buttonRipples"><span className="ripplesCircle"></span></div>
