@@ -58,6 +58,9 @@ module.exports = (() => {
       case '/engage':
         engage(JsonData.message.chat.id, getParams(JsonData.message.text).join(' '));
         break;
+      case '/roulette':
+        roulette(JsonData.message.chat.id);
+        break;
 
       case 'undefined':
         bot.sendMessage(JsonData.message.chat.id, errorMessage('No message text supplied'));
@@ -74,6 +77,14 @@ module.exports = (() => {
       return Params[generateRandomNumber(0, Params.length)];
     } else {
       return errorMessage('No options specified');
+    }
+  }
+
+  function roulette(chatID){
+    if(generateRandomNumber(1,5)===1){
+      sendMessage(chatID, "Peng! Du bist Tod. Miau")
+    }else {
+      sendMessage(chatID, "Glück gehabt du Penner")
     }
   }
 
