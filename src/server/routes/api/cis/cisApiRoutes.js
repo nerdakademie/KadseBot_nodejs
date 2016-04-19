@@ -1,7 +1,6 @@
-const productApiController = require('../../../controller/api/product/productApiController');
+const cisApiController = require('../../../controller/api/cis/cisApiController');
 const router = require('express').Router();
 
-router.get('/', productApiController.find);
-router.post('/', productApiController.save);
+router.get('/speiseplan', cisApiController.speiseplan );
 
 module.exports = router;

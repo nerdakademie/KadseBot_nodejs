@@ -1,8 +1,10 @@
 const User = require('mongoose').model('User');
 const Userhelper = require('../../../helper/userHelper');
+const requestmodule = require('request');
+const cheerio = require('cheerio');
 
 module.exports = (() => {
-
+  'use strict';
   const grades_url = "https://cis.nordakademie.de/pruefungsamt/pruefungsergebnisse/?no_cache=1";
 
 
@@ -46,8 +48,28 @@ module.exports = (() => {
       }
     });
   }
+
+  function speiseplan(request, response) {
+    requestmodule('https://cis.nordakademie.de/service/tp-mensa/speiseplan.cmd', function(error, request_response, html) {
+      if (!error && request_response.statusCode === 200) {
+        const $ = cheerio.load(html);
+        $('td.speiseplan-tag-container').each(function() {
+          $('td.speiseplan-tag', this).each(function(iterator2, element2) {
+            //console.log($(this).text().trim());
+            console.log($('.speiseplan-kurzbeschreibung ', this).text().trim().trim().replace(/\s\s+/g, ''));
+            console.log($('.speiseplan-preis', this).text().trim().trim().replace(/\s\s+/g, ''));
+          });
+        });
+      }
+    });
+    response.end();
+  }
+
+
+
   return {
     login,
-    logout
+    logout,
+    speiseplan
   };
 })();

@@ -7,7 +7,7 @@ module.exports = (() => {
   'use strict';
 
   const botName = 'KadseBot';
-  function contains(origstring, compare){
+  function contains(origstring, compare) {
     return origstring.indexOf(compare) > -1;
   }
 
@@ -42,6 +42,7 @@ module.exports = (() => {
     } else {
       command = getCommand(JsonData.message.text);
     }
+    console.log('after getCommand'.concat(command));
     switch (command) {
       case '/echo':
         bot.sendMessage(JsonData.message.chat.id, getParams(JsonData.message.text).join(' '));
