@@ -17,10 +17,10 @@ module.exports = (() => {
     if (contains(inputData, ' ')) {
       command = command.split(' ')[0];
     }
-    if (contains(command, '@'.concat(botName))) {
-      return command.replace('@'.concat(botName), '');
-    } else if (contains(command, ' @'.concat(botName))) {
-      return command.replace(' @'.concat(botName), '');
+    if (contains(command, '@'.concat(botName.toLowerCase()))) {
+      return command.replace('@'.concat(botName.toLowerCase()), '');
+    } else if (contains(command, ' @'.concat(botName.toLowerCase()))) {
+      return command.replace(' @'.concat(botName.toLowerCase()), '');
     }
     return command;
   }
