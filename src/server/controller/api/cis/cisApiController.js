@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 
 module.exports = (() => {
   'use strict';
-  const grades_url = "https://cis.nordakademie.de/pruefungsamt/pruefungsergebnisse/?no_cache=1";
+  const grades_url = 'https://cis.nordakademie.de/pruefungsamt/pruefungsergebnisse/?no_cache=1';
 
 
   function getGrades(request, response) {
@@ -22,7 +22,7 @@ module.exports = (() => {
     } else {
       User.find({nak_user: request.body.username}).limit( 1 ).exec((error, users) => {
         users.map(function(user) {
-          if (user == []) {
+          if (user === []) {
             response.json({success: false});
           }
           else if (error) {
@@ -54,7 +54,7 @@ module.exports = (() => {
       if (!error && request_response.statusCode === 200) {
         const $ = cheerio.load(html);
         $('td.speiseplan-tag-container').each(function() {
-          $('td.speiseplan-tag', this).each(function(iterator2, element2) {
+          $('td.speiseplan-tag', this).each(function() {
             //console.log($(this).text().trim());
             console.log($('.speiseplan-kurzbeschreibung ', this).text().trim().trim().replace(/\s\s+/g, ''));
             console.log($('.speiseplan-preis', this).text().trim().trim().replace(/\s\s+/g, ''));
