@@ -7,6 +7,7 @@ module.exports = (() => {
   'use strict';
 
   const botName = 'KadseBot';
+  let ohKadseMap= new Map();
   function contains(origstring, compare) {
     return origstring.indexOf(compare) > -1;
   }
@@ -54,7 +55,8 @@ module.exports = (() => {
         bot.sendMessage(JsonData.message.chat.id, decide(getParams(JsonData.message.text)));
         break;
       case '/ohkadsewasessenwirheute':
-        bot.sendMessage(JsonData.message.chat.id, decide(['Mensa', 'Fresh', 'Smileys', 'Penny', 'Dinos', 'Hack']));
+        ohKadseWasEssenWirHeute(JsonData.message.chat.id);
+        //bot.sendMessage(JsonData.message.chat.id, decide(['Mensa', 'Fresh', 'Smileys', 'Penny', 'Dinos', 'Hack']));
         break;
       case '/engage':
         engage(JsonData.message.chat.id, getParams(JsonData.message.text).join(' '));
@@ -62,7 +64,6 @@ module.exports = (() => {
       case '/roulette':
         roulette(JsonData.message.chat.id);
         break;
-
       case 'undefined':
         bot.sendMessage(JsonData.message.chat.id, errorMessage('No message text supplied'));
         break;
@@ -129,6 +130,21 @@ module.exports = (() => {
       }
     });
   }
+
+  function ohKadseWasEssenWirHeute(chatID) {
+    if (!ohKadseMap.has(chatID) || ohKadseMap.get(chatID) !== new Date().getDate()) {
+      const decision = decide(['Mensa', 'Fresh', 'Smileys', 'Penny', 'Dinos', 'Hack']);
+      if (decision !== 'Hack') {
+        ohKadseMap.set(chatID, new Date().getDate());
+      } else {
+        ohKadseMap.delete(chatID);
+      }
+      bot.sendMessage(chatID, decision);
+    } else {
+      bot.sendMessage(chatID, 'Ob du behindert bist. Kadse hat entschieden!');
+    }
+  }
+
 
   function incrementUsage(inputData){
       Statistic.findOne({chat_id: inputdata.message.chat.id}, function(err, statisticEntry) {
