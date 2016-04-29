@@ -34,7 +34,7 @@ module.exports = (() => {
   function meal(parserContext, element) {
     return {
       description: removeWhitespace(parserContext('.speiseplan-kurzbeschreibung', element).text()),
-      price: removeWhitespace(parserContext('.speiseplan-preis', element).text().slice(0,-4))
+      price: removeWhitespace(parserContext('.speiseplan-preis', element).text()).slice(0, 4)
     };
   }
 
