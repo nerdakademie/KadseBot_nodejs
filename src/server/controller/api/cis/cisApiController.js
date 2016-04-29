@@ -3,7 +3,7 @@ const Userhelper = require('../../../helper/userHelper');
 const requestmodule = require('request');
 const cheerio = require('cheerio');
 const speiseplanHelper = require('../../../helper/speiseplanHelper');
-var moment = require('moment');
+const moment = require('moment');
 
 module.exports = (() => {
   'use strict';
