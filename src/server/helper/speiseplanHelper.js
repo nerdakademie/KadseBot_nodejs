@@ -19,7 +19,7 @@ module.exports = (() => {
     cheerioHandle('td.speiseplan-tag-container').each(function() {
       const eachDayContent = {};
       let mealCounter = 0;
-      eachDayContent.date = getDates(cheerioHandle)[dayCounter];
+      eachDayContent.date = getDates(cheerioHandle)[dayCounter] + new Date().getFullYear();
       cheerioHandle('td.speiseplan-tag', this).each(function(i, elem) {
         mealCounter += 1;
         const mealName = 'meal'.concat(mealCounter);
