@@ -16,11 +16,12 @@ module.exports = (() => {
   function getMeals(cheerioHandle) {
     const arr = {};
     let dayCounter = 0;
+    const Dates = getDates(cheerioHandle);
     cheerioHandle('td.speiseplan-tag-container').each(function() {
       const eachDayContent = {};
       let mealCounter = 0;
-      eachDayContent.date = getDates(cheerioHandle)[dayCounter] + new Date().getFullYear();
-      cheerioHandle('td.speiseplan-tag', this).each(function(i, elem) {
+      eachDayContent.date = Dates[dayCounter] + new Date().getFullYear();
+      cheerioHandle('td.speiseplan-tag', this).each(function(id, elem) {
         mealCounter += 1;
         const mealName = 'meal'.concat(mealCounter);
         eachDayContent[mealName] = meal(cheerioHandle, elem);
@@ -43,7 +44,6 @@ module.exports = (() => {
   }
 
   return {
-    getDates,
     getMeals
   };
 })();

@@ -3,6 +3,7 @@ const Userhelper = require('../../../helper/userHelper');
 const requestmodule = require('request');
 const cheerio = require('cheerio');
 const speiseplanHelper = require('../../../helper/speiseplanHelper');
+var moment = require('moment');
 
 module.exports = (() => {
   'use strict';
@@ -51,7 +52,15 @@ module.exports = (() => {
   }
 
   function speiseplan(request, response) {
-    requestmodule('https://cis.nordakademie.de/service/tp-mensa/speiseplan.cmd', function(error, request_response, html) {
+    let url = 'https://cis.nordakademie.de/service/tp-mensa/speiseplan.cmd';
+    if (request.query.week !== undefined && request.query.year !== undefined) {
+      console.log(request.query.week);
+      console.log(request.query.year);
+      url= url + '?date=' + moment(''.concat(request.query.year, '-W', request.query.week, '-6')).unix() + '999&action=show';
+    } else if (request.query.date !== undefined) {
+      url= url + '?date=' + request.query.date + '999&action=show';
+    }
+    requestmodule(url, function(error, request_response, html) {
       if (!error && request_response.statusCode === 200) {
         const $ = cheerio.load(html);
         response.json(speiseplanHelper.getMeals($));
