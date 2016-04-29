@@ -2,6 +2,7 @@ const User = require('mongoose').model('User');
 const Userhelper = require('../../../helper/userHelper');
 const requestmodule = require('request');
 const cheerio = require('cheerio');
+const speiseplanHelper = require('../../../helper/speiseplanHelper');
 
 module.exports = (() => {
   'use strict';
@@ -53,16 +54,12 @@ module.exports = (() => {
     requestmodule('https://cis.nordakademie.de/service/tp-mensa/speiseplan.cmd', function(error, request_response, html) {
       if (!error && request_response.statusCode === 200) {
         const $ = cheerio.load(html);
-        $('td.speiseplan-tag-container').each(function() {
-          $('td.speiseplan-tag', this).each(function() {
-            //console.log($(this).text().trim());
-            console.log($('.speiseplan-kurzbeschreibung ', this).text().trim().trim().replace(/\s\s+/g, ''));
-            console.log($('.speiseplan-preis', this).text().trim().trim().replace(/\s\s+/g, ''));
-          });
-        });
+        response.json(speiseplanHelper.getMeals($));
+        response.end();
+      } else{
+        response.end();
       }
     });
-    response.end();
   }
 
 
