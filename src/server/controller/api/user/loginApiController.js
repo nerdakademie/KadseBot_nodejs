@@ -13,7 +13,7 @@ module.exports = (() => {
         if (user == null) {
           response.json({success: false});
         }
-        else if (user.nak_pass === request.body.password) {
+        else if(userHelper.isPasswordCorrect(user,request.body.password)) {
           request.session.user = user.nak_user;
           response.json({success: true});
         } else {

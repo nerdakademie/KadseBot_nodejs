@@ -60,8 +60,8 @@ module.exports = (() => {
     }
     requestmodule(url, function(error, request_response, html) {
       if (!error && request_response.statusCode === 200) {
-        const $ = cheerio.load(html);
-        response.json(speiseplanHelper.getMeals($));
+        const speisePlanPage = cheerio.load(html);
+        response.json(speiseplanHelper.getMeals(speisePlanPage));
         response.end();
       } else{
         response.end();

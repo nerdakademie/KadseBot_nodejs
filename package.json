@@ -1,12 +1,11 @@
 {
-  "name": "turing-microservice",
-  "description": "Node.js microservice template",
+  "name": "KadseBot",
+  "description": "Telegram Bot with Client UI, based on turing-microservice by Benedikt Stemmildt",
   "version": "0.4.0",
   "private": false,
   "author": {
-    "name": "Benedikt Stemmildt",
-    "email": "benedikt.stemmildt@otto.de",
-    "url": "https://github.com/benestem"
+    "name": "Nerdakademie",
+    "url": "https://github.com/nerdakademie"
   },
   "main": "bin/server.js",
   "scripts": {
@@ -22,7 +21,7 @@
     ]
   },
   "dependencies": {
-    "node-telegram-bot-api": "0.20.1",
+    "node-telegram-bot-api": "0.23.3",
     "body-parser": "1.15.0",
     "compression": "1.6.1",
     "config": "1.19.0",
@@ -34,6 +33,7 @@
     "debug": "2.2.0",
     "express": "4.13.4",
     "moment": "2.13.0",
+    "bcrypt": "0.8.7",
     "extract-text-webpack-plugin": "1.0.1",
     "mongoose": "4.4.4",
     "morgan": "1.7.0",
@@ -83,13 +83,13 @@
   "engines": {
     "node": "5.4.1"
   },
-  "homepage": "https://github.com/otto-de/turing-microservice#readme",
+  "homepage": "https://github.com/nerdakademie/KadseBot_nodejs/#readme",
   "repository": {
     "type": "git",
-    "url": "git@github.com:otto-de/turing-microservice.git"
+    "url": "git@github.com:nerdakademie/KadseBot_nodejs.git"
   },
   "bugs": {
-    "url": "https://github.com/otto-de/turing-microservice/issues"
+    "url": "https://github.com/nerdakademie/KadseBot_nodejs/issues"
   },
   "license": "MIT"
 }
