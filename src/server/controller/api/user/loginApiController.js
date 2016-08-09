@@ -20,6 +20,7 @@ module.exports = (() => {
             response.json({success: false});
           }
         });
+      });
     }
   }
 
