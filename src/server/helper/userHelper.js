@@ -35,20 +35,20 @@ module.exports = (() => {
     });
   }
 
-  function registerUser(user){
+  function registerUser(user,callback){
     User.count({nak_user: user.nak_user}, function(err, count) {
       if(err){
-        response.json({status: 'failed'});
+        callback('failed');
       }else{
         if (count > 0) {
-          response.json({status: 'failed'});
+          callback('failed');
         } else {
           user.nak_pass = getHashFromPassword(user.nak_pass);
           user.save((error) => {
             if (error) {
-              response.json({status: 'error'});
+              callback('error');
             } else {
-              response.json({status: 'success'});
+              callback('success');
             }
           });
         }
