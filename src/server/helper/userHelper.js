@@ -25,18 +25,17 @@ module.exports = (() => {
       });
     }
 
-  function isPasswordCorrect(user,password) {
+  function isPasswordCorrect(user,password,callback) {
     bcrypt.compare(password, user.nak_pass, function(err, res) {
       if(err){
-        return false;
+        callback(false);
       }else{
-        return res;
+        callback(true);
       }
     });
   }
 
   function registerUser(user,callback){
-    console.log(user);
     User.count({nak_user: user.nak_user}, function(err, count) {
       if(err){
         callback('error: database error');
@@ -44,7 +43,7 @@ module.exports = (() => {
         if (count > 0) {
           callback('error: user already exists');
         } else {
-          console.log(getHashFromPassword(user.nak_pass))
+          user.nak_pass = bcrypt.hashSync(user.nak_pass,saltRounds);
           user.save((error) => {
             if (error) {
               callback('error: data does not match schema');

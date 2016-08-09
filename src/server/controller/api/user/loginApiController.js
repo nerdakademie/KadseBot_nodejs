@@ -13,13 +13,14 @@ module.exports = (() => {
         if (user == null) {
           response.json({success: false});
         }
-        else if(userHelper.isPasswordCorrect(user,request.body.password)) {
-          request.session.user = user.nak_user;
-          response.json({success: true});
-        } else {
-          response.json({success: false});
-        }
-      });
+        userHelper.isPasswordCorrect(user,request.body.password, function(result){
+          if(result){
+            request.session.user = user.nak_user;
+            response.json({success: true});
+          }else{
+            response.json({success: false});
+          }
+        });
     }
   }
 
