@@ -46,7 +46,8 @@ module.exports = (() => {
           user.nak_pass = getHashFromPassword(user.nak_pass);
           user.save((error) => {
             if (error) {
-              callback('error');
+              //callback('error');
+              callback(error);
             } else {
               callback('success');
             }
