@@ -42,14 +42,9 @@ For debug information add following environment parameter before the npm run com
 
     $ DEBUG=turing-microservice:*
 
-Then open a browser and visit:
 
-* Demo Index Page - http://localhost:8080/turing-microservice/
-* Status Page - http://localhost:8080/turing-microservice/internal/status    
-* Health Check - http://localhost:8080/turing-microservice/internal/health
-    
 ## Testing
-  
+
     $ npm test
 
 This also:
