@@ -22,5 +22,5 @@ server.on('error', (error) => {
 });
 server.on('listening', () => {
   // TODO get this value from ${config.rootPath}
-  debug('turing-microservice:server')(`Listening on port ${server.address().port}`);
+  debug('KadseBot:server')(`Listening on port ${server.address().port}`);
 });
