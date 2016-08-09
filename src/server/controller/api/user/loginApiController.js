@@ -4,7 +4,6 @@ const userHelper = require('../../../helper/userHelper');
 module.exports = (() => {
 
   function login(request, response) {
-    console.log(request.body);
     if (request.body.username == null || request.body.password == null) {
       response.json({success: false});
       response.end();
