@@ -10,8 +10,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 class LoginForm extends React.Component {
 
-  let register = false;
-
   constructor() {
     super();
   }
