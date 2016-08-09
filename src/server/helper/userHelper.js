@@ -36,6 +36,7 @@ module.exports = (() => {
   }
 
   function registerUser(user,callback){
+    console.log(user);
     User.count({nak_user: user.nak_user}, function(err, count) {
       if(err){
         callback('failed');
@@ -44,10 +45,10 @@ module.exports = (() => {
           callback('failed');
         } else {
           user.nak_pass = getHashFromPassword(user.nak_pass);
+          console.log(user.nak_pass)
           user.save((error) => {
             if (error) {
-              //callback('error');
-              callback(error);
+              callback('error: data does not match schema');
             } else {
               callback('success');
             }
