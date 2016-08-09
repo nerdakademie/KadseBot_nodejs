@@ -3,4 +3,5 @@
 /out/
 /resources/server/public/css/
 /resources/server/public/js/
+/resources/server/public/*.js
 /target/
