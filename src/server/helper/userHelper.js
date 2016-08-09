@@ -30,6 +30,7 @@ module.exports = (() => {
       if(err){
         callback(false);
       }else{
+        console.log(res);
         callback(res);
       }
     });
@@ -43,7 +44,7 @@ module.exports = (() => {
         if (count > 0) {
           callback('error: user already exists');
         } else {
-          const user = new User({nak_user: username, nak_pass: bcrypt.hashSync(user.nak_pass,saltRounds)});
+          const user = new User({nak_user: username, nak_pass: bcrypt.hashSync(password,saltRounds)});
           user.save((error) => {
             if (error) {
               callback('error: data does not match schema');
