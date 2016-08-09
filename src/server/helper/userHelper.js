@@ -30,7 +30,6 @@ module.exports = (() => {
       if(err){
         callback(false);
       }else{
-        console.log(res);
         callback(res);
       }
     });
@@ -56,8 +55,7 @@ module.exports = (() => {
       }
     });
   }
-
-
+  
   return {
     getUserBySession,
     getUserByName,

@@ -16,7 +16,7 @@ class LoginForm extends React.Component {
 
   checkLogin(e) {
     e.preventDefault();
-    $.post("api/login", {username: $('#user').val(), password: $('#pass').val()}, function(data) {
+    $.post("api/user/login", {username: $('#user').val(), password: $('#pass').val()}, function(data) {
       if(data.success) {
         location.reload();
       } else {
