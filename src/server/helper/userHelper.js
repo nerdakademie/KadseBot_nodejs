@@ -30,20 +30,20 @@ module.exports = (() => {
       if(err){
         callback(false);
       }else{
-        callback(true);
+        callback(res);
       }
     });
   }
 
-  function registerUser(user,callback){
-    User.count({nak_user: user.nak_user}, function(err, count) {
+  function registerUser(username,password,callback){
+    User.count({nak_user: username}, function(err, count) {
       if(err){
         callback('error: database error');
       }else{
         if (count > 0) {
           callback('error: user already exists');
         } else {
-          user.nak_pass = bcrypt.hashSync(user.nak_pass,saltRounds);
+          const user = new User({nak_user: username, nak_pass: bcrypt.hashSync(user.nak_pass,saltRounds)});
           user.save((error) => {
             if (error) {
               callback('error: data does not match schema');

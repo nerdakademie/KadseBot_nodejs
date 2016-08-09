@@ -5,9 +5,8 @@ const userHelper = require('../../../helper/userHelper');
 module.exports = (() => {
 
   function register(request, response) {
-    const user = new User({nak_user: request.body.username, nak_pass: request.body.password});
     //TODO check if user is actually a nak user
-    userHelper.registerUser(user,function(message){
+    userHelper.registerUser(request.body.username, request.body.password,function(message){
       response.json({status: message});
     });
   }
