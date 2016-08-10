@@ -38,7 +38,7 @@ module.exports = (() => {
 
   function isNAKUser(username,password){
     request.post({url:'https://cis.nordakademie.de/startseite/?no_cache=1', form: {logintype: "login", pid: 0,user: username,pass: password}}, function(err,httpResponse,body){
-      console.log(httpResponse.headers);
+      console.log(httpResponse.headers.set-cookie);
     });
   }
 
