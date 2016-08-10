@@ -1,9 +1,4 @@
-# Example YAML to get you started quickly.
-# Be aware that YAML has indentation based scoping.
-# Code completion support is available so start typing for available options.
 swagger: '2.0'
-
-# This is your document metadata
 info:
   version: "0.0.1"
   title: Nerdakademie API
@@ -12,10 +7,17 @@ host: bot.nerdakademie.xyz
 schemes:
   - https
 basePath: "/api"
+
+tags:
+  - name: User,
+    description: API for something
 paths:
   /user/login:
     post:
       description: Logs user in. (Setting cookie)
+      operationId: "findPets"
+      tags:
+        - User
       consumes:
         - application/json
       produces:
@@ -38,11 +40,28 @@ paths:
   /user/logout:
     get:
       description: Invalidates session
+      tags:
+        - User
       responses:
         200:
           description: Successful response
           schema:
             $ref: "#/definitions/successMessage"
+  /user/register:
+    post:
+      description: Register new user
+      tags:
+        - User
+      consumes:
+          - application/json
+      produces:
+          - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/user_password"
 definitions:
   successMessage:
     type: object
