@@ -4,12 +4,12 @@ const request = require('request');
 const saltRounds = 12;
 
 module.exports = (() => {
-
-  function parseSetCookies(cookieArray){
-    var list ={};
-    cookieArray.forEach(function (cookieItem){
-      cookieItem && cookieItem.split(';').forEach(function( cookie ) {
-        var parts = cookie.split('=');
+  'use strict';
+  function parseSetCookies(cookieArray) {
+    const list = {};
+    cookieArray.forEach(function (cookieItem) {
+      cookieItem.split(';').forEach(function (cookie) {
+        let parts = cookie.split('=');
         list[parts.shift().trim()] = decodeURI(parts.join('='));
       });
     });
@@ -18,7 +18,7 @@ module.exports = (() => {
 
   function getUserBySession(request, callback) {
     User.findOne({nak_user: request.session.user}).exec((error, user) => {
-        callback( user );
+        callback (user);
     });
   }
 
@@ -29,29 +29,29 @@ module.exports = (() => {
   }
 
   function getHashFromPassword(password) {
-    bcrypt.hash(password, saltRounds, function(err, hash) {
-      if(err){
-        return "";
-      }else{
+    bcrypt.hash(password, saltRounds, function (err, hash) {
+      if (err) {
+        return '';
+      } else {
         return hash;
       }
     });
   }
 
-  function getNAKAuthCookie(username,password,callback){
-    request.post({url:'https://cis.nordakademie.de/startseite/?no_cache=1', form: {logintype: "login", pid: 0,user: username,pass: password}}, function(err,httpResponse,body){
-      if(httpResponse.statusCode == 404){
+  function getNAKAuthCookie(username,password,callback) {
+    request.post({url: 'https://cis.nordakademie.de/startseite/?no_cache=1', form: {logintype: "login", pid: 0, user: username, pass: password}}, function(err,httpResponse,body){
+      if (httpResponse.statusCode === 404) {
         callback(false);
-      }else if(httpResponse.statusCode == 303){
-        //We are being redirected
-        const cookies = httpResponse.headers["set-cookie"];
-        if(cookies == null){
+      } else if (httpResponse.statusCode === 303) {
+        // We are being redirected
+        const cookies = httpResponse.headers['set-cookie'];
+        if (cookies === null) {
           callback(false);
-        }else{
+        } else {
           const cookieList = parseSetCookies(cookies);
-          if(cookieList.fe_typo_user == null){
+          if (cookieList.fe_typo_user === null) {
             callback(false);
-          }else{
+          } else {
             callback(cookieList.fe_typo_user);
           }
         }
@@ -59,44 +59,42 @@ module.exports = (() => {
     });
   }
 
-  function isPasswordCorrect(user,password,callback) {
-    bcrypt.compare(password, user.nak_pass, function(err, res) {
-      if(err){
+  function isPasswordCorrect(user, password, callback) {
+    bcrypt.compare(password, user.nak_pass, function (err, res) {
+      if (err) {
         callback(false);
-      }else{
+      } else {
         callback(res);
       }
     });
   }
 
-  function isNAKUser(username,password,callback){
-    request.post({url:'https://cis.nordakademie.de/startseite/?no_cache=1', form: {logintype: "login", pid: 0,user: username,pass: password}}, function(err,httpResponse,body){
-      if(httpResponse.statusCode == 404){
+  function isNAKUser(username, password, callback) {
+    request.post({url: 'https://cis.nordakademie.de/startseite/?no_cache=1', form: {logintype: "login", pid: 0, user: username, pass: password}}, function (err,httpResponse,body) {
+      if (httpResponse.statusCode === 404) {
         callback(false);
-      }else if(httpResponse.statusCode == 303){
-        //We are being redirected
+      } else if (httpResponse.statusCode === 303) {
+        // We are being redirected
         callback(true);
       }
     });
   }
 
-  function registerUser(username,password,callback){
-    User.count({nak_user: username}, function(err, count) {
-      if(err){
+  function registerUser(username, password, callback){
+    User.count({nak_user: username}, function (err, count) {
+      if (err) {
         callback('error: database error');
-      }else{
-        if (count > 0) {
-          callback('error: user already exists');
-        } else {
-          const user = new User({nak_user: username, nak_pass: bcrypt.hashSync(password,saltRounds)});
-          user.save((error) => {
-            if (error) {
-              callback('error: data does not match schema');
-            } else {
-              callback('success');
-            }
-          });
-        }
+      } else if (count === 0) {
+        const user = new User({nak_user: username, nak_pass: bcrypt.hashSync(password,saltRounds)});
+        user.save((error) => {
+          if (error) {
+            callback('error: data does not match schema');
+          } else {
+            callback('success');
+          }
+        });
+      } else {
+        callback('error: user already exists');
       }
     });
   }
