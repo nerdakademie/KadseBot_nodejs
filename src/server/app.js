@@ -6,6 +6,7 @@ const consolidate = require('consolidate');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoStore = require('express-session-mongo');
 
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -32,6 +33,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(session({
   secret: 'Kadse SECRET'
+  store: new MongoStore({ip: '127.0.0.1',port:'27017',db:'kadse',collection:'sessions'})
 }));
 
 webpackClientDevConfig.output.publicPath = config.rootPath;
