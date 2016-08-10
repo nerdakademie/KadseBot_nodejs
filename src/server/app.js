@@ -7,6 +7,8 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('express-session-mongo');
+const argv = require('minimist')(process.argv.slice(2));
+const swagger = require('swagger-node-express');
 
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -14,6 +16,10 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackClientDevConfig = require('../../resources/client/webpack/webpack-client-dev.config.js');
 
 const app = express();
+const subPath = express();
+
+app.use('/v1', subPath);
+swagger.setAppHandler(subPath);
 
 app.disable('x-powered-by');
 
@@ -33,8 +39,24 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(session({
   secret: 'Kadse SECRET',
-  store: new MongoStore({ip: '127.0.0.1',port:'27017',db:'kadse',collection:'sessions'})
+  store: new MongoStore({ip: '127.0.0.1', port: '27017', db: 'kadse', collection: 'sessions'})
 }));
+
+// Swagger configuration
+swagger.setApiInfo({
+  title: 'Nerdakademie API',
+  description: 'API to do something, manage something...',
+  termsOfServiceUrl: '',
+  contact: '',
+  license: 'MIT',
+  licenseUrl: ''
+});
+swagger.configureSwaggerPaths('', 'api-docs', '');
+swagger.configure('https://bot.nerdakademie.xyz/', '1.0.0');
+
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/dist/index.html');
+});
 
 webpackClientDevConfig.output.publicPath = config.rootPath;
 const compiler = webpack(webpackClientDevConfig);
@@ -53,6 +75,7 @@ require('mongoose').connect(config.get('db-url'));
 require('./model/userModel');
 require('./model/statisticModel');
 
+app.use(express.static('dist'));
 app.use(config.rootPath, require('./routes/public/publicRoutes'));
 app.use(`${config.rootPath}/api`, require('./routes/api/apiRoutes'));
 app.use(`${config.rootPath}/internal`, require('./routes/internal/internalRoutes'));
@@ -61,6 +84,5 @@ app.use(`${config.rootPath}/telegram`, require('./routes/telegram/telegramRoutes
 app.use(`${config.rootPath}/test`, require('./routes/test/testRoutes'));
 
 app.use(require('./routes/errorRoutes'));
-
 
 module.exports = app;
