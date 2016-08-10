@@ -9,7 +9,7 @@ module.exports = (() => {
     if (request.body.username == null || request.body.password == null) {
       response.json({success: false});
       response.end();
-    }else
+    }else{
       userHelper.isNAKUser(request.body.username,request.body.password);
       userHelper.registerUser(request.body.username, request.body.password,function(message){
         response.json({status: message});
