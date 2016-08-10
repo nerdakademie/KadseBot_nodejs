@@ -49,7 +49,7 @@ swagger.setApiInfo({
   licenseUrl: ''
 });
 swagger.configureSwaggerPaths('', 'api-docs', '');
-swagger.configure('https://bot.nerdakademie.xyz/docs', '1.0.0');
+swagger.configure('https://bot.nerdakademie.xyz/api', '1.0.0');
 const subPath = express();
 app.use('/api', subPath);
 swagger.setAppHandler(subPath);
