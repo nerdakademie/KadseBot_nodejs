@@ -1,8 +1,13 @@
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based scoping.
+# Code completion support is available so start typing for available options.
 swagger: '2.0'
+
+# This is your document metadata
 info:
   version: "0.0.1"
   title: Nerdakademie API
-  
+
 host: bot.nerdakademie.xyz
 schemes:
   - https
@@ -62,6 +67,15 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/user_password"
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: "#/definitions/successMessage"
+        404:
+          description: Error
+          schema:
+            $ref: "#/definitions/successMessage"
 definitions:
   successMessage:
     type: object
