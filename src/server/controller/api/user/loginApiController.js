@@ -10,7 +10,7 @@ module.exports = (() => {
     } else {
       userHelper.getUserByName(request.body.username, function(user) {
         if (user == null) {
-          response.json({success: false});
+          response.(404)json({success: false});
         }
         userHelper.isPasswordCorrect(user,request.body.password, function(result){
           if(result){
