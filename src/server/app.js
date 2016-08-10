@@ -71,24 +71,12 @@ require('mongoose').connect(config.get('db-url'));
 require('./model/userModel');
 require('./model/statisticModel');
 
-app.use(express.static('dist'));
 app.use(config.rootPath, require('./routes/public/publicRoutes'));
 app.use(`${config.rootPath}/api`, require('./routes/api/apiRoutes'));
 app.use(`${config.rootPath}/internal`, require('./routes/internal/internalRoutes'));
 app.use(`${config.rootPath}/telegram`, require('./routes/telegram/telegramRoutes'));
 // Swagger redirect
-// app.use(`${config.rootPath}/docs`, express.static(path.join(__dirname, '/dist/')));
-const docs_handler = express.static(path.join(__dirname, '/dist/'));
-app.get(/^\/docs(\/.*)?$/, function(req, res, next) {
-  if (req.url === '/docs') {
-    res.writeHead(302, { 'Location' : req.url + '/' });
-    res.end();
-    return;
-  }
-  // take off leading /docs so that connect locates file correctly
-  req.url = req.url.substr('/docs'.length);
-  return docs_handler(req, res, next);
-});
+app.use(`${config.rootPath}/docs`, express.static('dist'));
 
 app.use(`${config.rootPath}/test`, require('./routes/test/testRoutes'));
 
