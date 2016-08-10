@@ -11,7 +11,7 @@
   "scripts": {
     "build": "gulp build",
     "test": "gulp test",
-    "watch": "DEBUG=turing-microservice:* NODE_CONFIG_DIR=./resources/server/config nodemon --ext html,js",
+    "watch": "DEBUG=kadsebot:* NODE_CONFIG_DIR=./resources/server/config nodemon --ext html,js",
     "start": "NODE_CONFIG_DIR=./resources/server/config NODE_ENV=production node bin/server.js"
   },
   "babel": {
@@ -23,7 +23,7 @@
   "dependencies": {
     "node-telegram-bot-api": "0.23.3",
     "body-parser": "1.15.2",
-    "bcrypt": "0.8.7",
+    "twin-bcrypt": "2.1.1",
     "compression": "1.6.1",
     "config": "1.19.0",
     "consolidate": "0.14.0",
