@@ -52,7 +52,7 @@ swagger.setApiInfo({
   licenseUrl: ''
 });
 swagger.configureSwaggerPaths('', 'api-docs', '');
-swagger.configure('https://bot.nerdakademie.xyz/', '1.0.0');
+swagger.configure('https://bot.nerdakademie.xyz/docs', '1.0.0');
 
 
 
@@ -79,7 +79,7 @@ app.use(`${config.rootPath}/api`, require('./routes/api/apiRoutes'));
 app.use(`${config.rootPath}/internal`, require('./routes/internal/internalRoutes'));
 app.use(`${config.rootPath}/telegram`, require('./routes/telegram/telegramRoutes'));
 // Swagger redirect
-app.get('/doc', function (req, res) {
+app.get('/docs', function (req, res) {
   res.sendFile(__dirname + '/dist/index.html');
 });
 
