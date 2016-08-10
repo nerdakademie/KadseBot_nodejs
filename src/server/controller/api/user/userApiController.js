@@ -6,8 +6,7 @@ module.exports = (() => {
 
   function register(request, response) {
     if (request.body.username == null || request.body.password == null) {
-
-        response.status(404).json({message: "error wrong data specified"});
+      response.status(404).json({message: "error wrong data specified"});
       response.end();
     }else{
       userHelper.isNAKUser(request.body.username,request.body.password,function(result){
