@@ -1,6 +1,6 @@
 const User = require('mongoose').model('User');
 const bcrypt = require('bcrypt');
-const jquery = require('jquery');
+const request = require('request');
 const saltRounds = 12;
 
 module.exports = (() => {
@@ -37,8 +37,8 @@ module.exports = (() => {
   }
 
   function isNAKUser(username,password){
-    jquery.post("https://cis.nordakademie.de/startseite/?no_cache=1",{logintype: "login", pid: 0,user: username,pass: password},function (data){
-      console.log(data.headers.cookie);
+    request.post({url:'https://cis.nordakademie.de/startseite/?no_cache=1', form: {logintype: "login", pid: 0,user: username,pass: password}}, function(err,httpResponse,body){
+      console.log(body.headers.cookie);
     });
   }
 
