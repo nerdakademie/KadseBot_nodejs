@@ -54,8 +54,6 @@ swagger.setApiInfo({
 swagger.configureSwaggerPaths('', 'api-docs', '');
 swagger.configure('https://bot.nerdakademie.xyz/docs', '1.0.0');
 
-
-
 webpackClientDevConfig.output.publicPath = config.rootPath;
 const compiler = webpack(webpackClientDevConfig);
 const publicWebpackDevMiddleware = webpackDevMiddleware(compiler, {
@@ -79,7 +77,7 @@ app.use(`${config.rootPath}/api`, require('./routes/api/apiRoutes'));
 app.use(`${config.rootPath}/internal`, require('./routes/internal/internalRoutes'));
 app.use(`${config.rootPath}/telegram`, require('./routes/telegram/telegramRoutes'));
 // Swagger redirect
-app.get('/docs', function (req, res) {
+app.get(`${config.rootPath}/docs`, function (req, res) {
   res.sendFile(__dirname + '/dist/index.html');
 });
 
