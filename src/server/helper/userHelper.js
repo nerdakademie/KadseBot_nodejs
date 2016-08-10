@@ -8,7 +8,7 @@ module.exports = (() => {
   function parseSetCookies(cookieArray){
     var list ={};
     cookieArray.forEach(function (cookieItem){
-      cookieItem && cookieOtem.split(';').forEach(function( cookie ) {
+      cookieItem && cookieItem.split(';').forEach(function( cookie ) {
         var parts = cookie.split('=');
         list[parts.shift().trim()] = decodeURI(parts.join('='));
       });
