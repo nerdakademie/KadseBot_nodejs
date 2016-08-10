@@ -4,6 +4,18 @@ const request = require('request');
 const saltRounds = 12;
 
 module.exports = (() => {
+
+  function parseSetCookies(cookieArray){
+    var list ={};
+    cookies.forEach(function (cookieItem){
+      cookieItem && cookieOtem.split(';').forEach(function( cookie ) {
+        var parts = cookie.split('=');
+        list[parts.shift().trim()] = decodeURI(parts.join('='));
+      });
+    });
+    return list;
+  }
+
   function getUserBySession(request, callback) {
     User.findOne({nak_user: request.session.user}).exec((error, user) => {
         callback( user );
@@ -17,14 +29,35 @@ module.exports = (() => {
   }
 
   function getHashFromPassword(password) {
-      bcrypt.hash(password, saltRounds, function(err, hash) {
-        if(err){
-          return "";
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+      if(err){
+        return "";
+      }else{
+        return hash;
+      }
+    });
+  }
+
+  function getNAKAuthCookie(username,password,callback){
+    request.post({url:'https://cis.nordakademie.de/startseite/?no_cache=1', form: {logintype: "login", pid: 0,user: username,pass: password}}, function(err,httpResponse,body){
+      if(httpResponse.statusCode == 404){
+        callback(false);
+      }else if(httpResponse.statusCode == 303){
+        //We are being redirected
+        const cookies = httpResponse.headers["set-cookie"];
+        if(cookies == null){
+          callback(false);
         }else{
-          return hash;
+          const cookieList = parseSetCookies(cookies);
+          if(cookieList.fe_typo_user == null){
+            callback(false);
+          }else{
+            callback(cookieList.fe_typo_user);
+          }
         }
-      });
-    }
+      }
+    });
+  }
 
   function isPasswordCorrect(user,password,callback) {
     bcrypt.compare(password, user.nak_pass, function(err, res) {
@@ -36,9 +69,14 @@ module.exports = (() => {
     });
   }
 
-  function isNAKUser(username,password){
+  function isNAKUser(username,password,callback){
     request.post({url:'https://cis.nordakademie.de/startseite/?no_cache=1', form: {logintype: "login", pid: 0,user: username,pass: password}}, function(err,httpResponse,body){
-      console.log(httpResponse.headers.set-cookie);
+      if(httpResponse.statusCode == 404){
+        callback(false);
+      }else if(httpResponse.statusCode == 303){
+        //We are being redirected
+        callback(true);
+      }
     });
   }
 
@@ -67,6 +105,7 @@ module.exports = (() => {
     getUserBySession,
     getUserByName,
     getHashFromPassword,
+    getNAKAuthCookie,
     isPasswordCorrect,
     isNAKUser,
     registerUser
