@@ -120,6 +120,7 @@ module.exports = (() => {
     getUserByName,
     getHashFromPassword,
     getNAKAuthCookie,
+    getNAKUserDetails,
     isPasswordCorrect,
     isNAKUser,
     registerUser
