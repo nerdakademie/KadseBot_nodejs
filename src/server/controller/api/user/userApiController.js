@@ -11,6 +11,7 @@ module.exports = (() => {
     }else{
       userHelper.isNAKUser(request.body.username,request.body.password,function(result){
         if(result){
+          userHelper.getNAKUserDetails(request.body.username,request.body.password)
           userHelper.registerUser(request.body.username, request.body.password,function(message){
               response.status(200).json({message: message});
           });
@@ -25,12 +26,12 @@ module.exports = (() => {
     if (request.body.username == null || request.body.password == null) {
       response.status(404).json({nakuser:false,message: "error wrong data specified"});
       response.end();
-    }else{
+    } else {
       userHelper.getNAKAuthCookie(request.body.username,request.body.password,function (result){
-        if(result === false){
+        if (result === false) {
           response.status(200).json({cookie:"",message: "error: could not find cookie"});
           response.end();
-        }else{
+        } else {
           response.json({cookie:result});
         }
       });
@@ -39,13 +40,13 @@ module.exports = (() => {
 
   function isNAKUser(request,response){
     if (request.body.username == null || request.body.password == null) {
-      response.status(404).json({nakuser:false,message: "error wrong data specified"});
+      response.status(404).json({nakuser:false,message: 'error wrong data specified'});
       response.end();
-    }else{
+    } else {
       userHelper.isNAKUser(request.body.username,request.body.password,function (result){
-        if(result){
+        if (result) {
           response.status(200).json({nakuser:true});
-        }else{
+        } else {
           response.status(200).json({nakuser:false});
         }
       });

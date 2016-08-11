@@ -1,6 +1,8 @@
 const User = require('mongoose').model('User');
 const bcrypt = require('bcrypt');
 const request = require('request');
+const cheerio = require('cheerio');
+const utils = require('utils');
 const saltRounds = 12;
 
 module.exports = (() => {
@@ -59,6 +61,20 @@ module.exports = (() => {
     });
   }
 
+  function getNAKUserDetails(username, password) {
+    getNAKAuthCookie(username, password, function (cookieResult) {
+      const ar = request.jar();
+      const cookie = request.cookie('fe_typo_user='+ cookieResult);
+      const url = 'https://cis.nordakademie.de/nacommunity/mein-profil/?no_cache=1';
+      ar.setCookie(cookie, url);
+      request.get({url: url, jar: ar}, function (err, httpContent, body) {
+        const $ = cheerio.load(body);
+        utils.parseTable($);
+      });
+    });
+
+  }
+
   function isPasswordCorrect(user, password, callback) {
     bcrypt.compare(password, user.nak_pass, function (err, res) {
       if (err) {
@@ -85,7 +101,7 @@ module.exports = (() => {
       if (err) {
         callback('error: database error');
       } else if (count === 0) {
-        const user = new User({nak_user: username, nak_pass: bcrypt.hashSync(password,saltRounds)});
+        const user = new User({user: username, pass: bcrypt.hashSync(password, saltRounds)});
         user.save((error) => {
           if (error) {
             callback('error: data does not match schema');

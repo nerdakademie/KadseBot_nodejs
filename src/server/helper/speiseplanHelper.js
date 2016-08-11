@@ -1,3 +1,4 @@
+const utils = require('utils');
 module.exports = (() => {
   'use strict';
 
@@ -32,15 +33,10 @@ module.exports = (() => {
 
   function meal(parserContext, element) {
     return {
-      description: removeWhitespace(parserContext('.speiseplan-kurzbeschreibung', element).text()),
-      price: removeWhitespace(parserContext('.speiseplan-preis', element).text()).slice(0, 4)
+      description: utils.removeWhitespace(parserContext('.speiseplan-kurzbeschreibung', element).text()),
+      price: utils.removeWhitespace(parserContext('.speiseplan-preis', element).text()).slice(0, 4)
     };
   }
-
-  function removeWhitespace(text) {
-    return text.trim().replace(/\s\s+/g, '');
-  }
-
   return {
     getMeals
   };
