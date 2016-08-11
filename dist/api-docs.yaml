@@ -23,7 +23,6 @@ paths:
   /user/login:
     post:
       description: Logs user in. (Setting cookie)
-      operationId: "findPets"
       tags:
         - User
       consumes:

@@ -5,14 +5,11 @@ module.exports = (() => {
     TelegramHelper.sendMessage(json.chatid, json.message);
     response.end();
   }
-
-
   function webHook(request, response) {
     const json = request.body;
     TelegramHelper.executeCommand(json);
     response.end();
   }
-
   return {
     sendMessage,
     webHook

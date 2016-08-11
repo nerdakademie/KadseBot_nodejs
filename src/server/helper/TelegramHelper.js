@@ -1,6 +1,6 @@
 const Statistic = require('mongoose').model('Statistic');
 const TelegramBot = require('node-telegram-bot-api');
-const telegramBotToken = '120945382:AAGrADFVuyEIxJJO3KRfdSz7EaoCNtcwwAw';
+const telegramBotToken = '120945382:AAFvCqF08ROSRUgEOTmhoXe_zco4_R38sEE';
 const bot = new TelegramBot(telegramBotToken);
 
 module.exports = (() => {
