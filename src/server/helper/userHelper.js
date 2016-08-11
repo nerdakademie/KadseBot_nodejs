@@ -2,7 +2,7 @@ const User = require('mongoose').model('User');
 const bcrypt = require('bcrypt');
 const request = require('request');
 const cheerio = require('cheerio');
-const utils = require('utils');
+const utils = require('./utils');
 const saltRounds = 12;
 
 module.exports = (() => {
