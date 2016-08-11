@@ -7,7 +7,7 @@ module.exports = (() => {
   function getDates(cheerioHandle) {
     const arr = [];
     cheerioHandle('td.speiseplan-head').each(function() {
-      arr.push(removeWhitespace(cheerioHandle(this).text()).split(',')[1]);
+      arr.push(utils.removeWhitespace(cheerioHandle(this).text()).split(',')[1]);
     });
     return arr;
   }

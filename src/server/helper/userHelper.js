@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const request = require('request');
 const cheerio = require('cheerio');
 const utils = require('./utils');
+const cheerioTableparser = require('cheerio-tableparser');
 const saltRounds = 12;
 
 module.exports = (() => {
@@ -69,7 +70,11 @@ module.exports = (() => {
       ar.setCookie(cookie, url);
       request.get({url: url, jar: ar}, function (err, httpContent, body) {
         const $ = cheerio.load(body);
-        utils.parseTable($);
+        cheerioTableparser($);
+        const data = $("form table").parsetable(false,false,true);
+        console.log(data);
+
+        // utils.parseTable($);
       });
     });
 
