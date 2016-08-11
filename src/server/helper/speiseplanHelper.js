@@ -1,12 +1,10 @@
-const cheerio = require('cheerio');
-
 module.exports = (() => {
   'use strict';
 
   const weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 
   function getDates(cheerioHandle) {
-    let arr = [];
+    const arr = [];
     cheerioHandle('td.speiseplan-head').each(function() {
       arr.push(removeWhitespace(cheerioHandle(this).text()).split(',')[1]);
     });
@@ -14,19 +12,19 @@ module.exports = (() => {
   }
 
   function getMeals(cheerioHandle) {
-    const arr = {};
+    const arr = [];
     let dayCounter = 0;
     const Dates = getDates(cheerioHandle);
     cheerioHandle('td.speiseplan-tag-container').each(function() {
       const eachDayContent = {};
-      let mealCounter = 0;
+      const meals = [];
       eachDayContent.date = Dates[dayCounter] + new Date().getFullYear();
+      eachDayContent.day = weekdays[dayCounter];
       cheerioHandle('td.speiseplan-tag', this).each(function(id, elem) {
-        mealCounter += 1;
-        const mealName = 'meal'.concat(mealCounter);
-        eachDayContent[mealName] = meal(cheerioHandle, elem);
+        meals.push(meal(cheerioHandle, elem));
       });
-      arr[weekdays[dayCounter]] = eachDayContent;
+      eachDayContent.meals = meals;
+      arr.push(eachDayContent);
       dayCounter += 1;
     });
     return arr;

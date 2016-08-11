@@ -14,9 +14,12 @@ schemes:
 basePath: "/api"
 
 tags:
-  - name: User,
-    description: API for something
+  - name: User
+    description: User Api
+  - name: CIS
+    description: CIS relevant API
 paths:
+#User
   /user/login:
     post:
       description: Logs user in. (Setting cookie)
@@ -76,11 +79,33 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/successMessage"
+  #Speiseplan
+  /cis/speiseplan:
+    get:
+      description: Get the Speiseplan of the NAK Mensa as a json
+      tags:
+        - CIS
+      parameters:
+        - name: year
+          in: query
+          required: false
+          type: number
+          format: int
+        - name: week
+          in: query
+          required: false
+          type: number
+          format: int
+      responses:
+        200:
+          description: Successfull
+          schema:
+            $ref: "#/definitions/speiseplan"
 definitions:
   successMessage:
     type: object
-    properties: 
-      success: 
+    properties:
+      success:
         type: boolean
         example : false
   user_password:
@@ -89,3 +114,28 @@ definitions:
         type: string
       password:
         type: string
+  speiseplan:
+    title: Array of Days
+    type: array
+    items:
+      $ref: "#/definitions/speiseplan_day"
+  speiseplan_day:
+    title: Day
+    type: object
+    properties:
+      date:
+        type: string
+      day:
+        type: string
+      meals:
+        type: array
+        items:
+          $ref: "#/definitions/speiseplan_meals"
+  speiseplan_meals:
+      title:  meal
+      type: object
+      properties:
+        description:
+          type: string
+        price:
+          type: string
