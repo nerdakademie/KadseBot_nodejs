@@ -98,10 +98,10 @@ module.exports = (() => {
     });
   }
 
-  function getNAKUserDetails(username, password, callback) {
-    getNAKAuthCookie(username, password, function (cookieResult) {
+  function getNAKUserDetails(apikey, callback) {
+    getApiUserByApiKey(apikey,function(apiUser) {
       const ar = request.jar();
-      const cookie = request.cookie('fe_typo_user=' + cookieResult);
+      const cookie = request.cookie('fe_typo_user=' + apiUser.typo_cookie);
       const url = 'https://cis.nordakademie.de/nacommunity/mein-profil/?no_cache=1';
       ar.setCookie(cookie, url);
       request.get({url: url, jar: ar}, function (err, httpContent, body) {
@@ -109,7 +109,6 @@ module.exports = (() => {
         callback(utils.parseTable($, 'form table tr'));
       });
     });
-
   }
 
   function isNAKUser(username, password, callback) {

@@ -34,17 +34,17 @@ module.exports = (() => {
   }
 
   function getUserDetails(request, response) {
-    if (request.body.username === null || request.body.password === null) {
+    if (request.query.apikey === null) {
       response.status(404).json({success: false,message: 'error wrong data specified'});
       response.end();
     } else {
-      cisUserHelper.getNAKUserDetails(request.body.username, request.body.password, function(userTable) {
+      cisUserHelper.getNAKUserDetails(request.query.apikey, function(userTable) {
         response.json(userTable);
       });
     }
   }
 
-  function getApiKey(request, response){
+  function getApiKey(request, response) {
     if (request.body.username === null || request.body.password === null) {
       response.status(404).json({success: false});
       response.end();
