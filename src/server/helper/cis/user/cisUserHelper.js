@@ -121,9 +121,9 @@ module.exports = (() => {
     });
   }
 
-  function isCookieValid(cookie, callback) {
+  function isCookieValid(nak_cookie, callback) {
     const ar = request.jar();
-    const cookie = request.cookie('fe_typo_user='+ cookie);
+    const cookie = request.cookie('fe_typo_user='+ nak_cookie);
     const url = 'https://cis.nordakademie.de/pruefungsamt/pruefungsergebnisse/?no_cache=1';
     ar.setCookie(cookie, url);
     request.get({url: url, jar: ar}, function (err, httpResponse, body) {
