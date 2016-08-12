@@ -4,7 +4,7 @@ module.exports = (() => {
     const tableDictionary = {};
     cheerioHandle('form table tr').each(function (id, elem) {
       const children = cheerioHandle(this).children();
-      console.log(children.eq(0));
+      console.log(children.eq(0).text());
       console.log(children.eq(1).text());
       /*
        cheerioHandle('td', elem).each(function (id2, elem2) {
