@@ -1,8 +1,7 @@
 import './style/main.scss';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import LeftNav from 'material-ui/lib/left-nav';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import Drawer from 'material-ui/Drawer';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -14,4 +13,4 @@ if (!root) {
   root = document.body;
 }
 
-ReactDOM.render(<LeftNav open="true" />, root);
+ReactDOM.render(<Drawer open='true' />, root);

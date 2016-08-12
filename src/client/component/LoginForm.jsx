@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import debug from 'debug';
-import TextField from 'material-ui/lib/text-field';
+import TextField from 'material-ui/TextField';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
