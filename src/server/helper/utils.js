@@ -4,7 +4,10 @@ module.exports = (() => {
     const tableDictionary = {};
     cheerioHandle(selection).each(function (id, elem) {
       const children = cheerioHandle(elem).children();
-      tableDictionary[removeWhitespace(children.eq(0).text())] = children.eq(1).text();
+      const dictKey= removeWhitespace(children.eq(0).text());
+      if (dictKey.indexOf('ändern') === -1 || dictKey.lenght > 0) {
+        tableDictionary[dictKey] = children.eq(1).text();
+      }
     });
     return tableDictionary;
   }

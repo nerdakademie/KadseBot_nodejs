@@ -9,7 +9,6 @@ module.exports = (() => {
   'use strict';
   const grades_url = 'https://cis.nordakademie.de/pruefungsamt/pruefungsergebnisse/?no_cache=1';
 
-
   function getGrades(request, response) {
     Userhelper.getUserBySession(request, function(user) {
       user.nak_user;

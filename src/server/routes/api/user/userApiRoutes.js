@@ -5,7 +5,5 @@ const router = require('express').Router();
 router.post('/register', userApiController.register);
 router.post('/login', loginApiController.login);
 router.get('/logout', loginApiController.logout);
-router.post('/isnakuser',userApiController.isNAKUser);
-router.post('/getnakauthcookie',userApiController.getNAKAuthCookie);
 
 module.exports = router;
