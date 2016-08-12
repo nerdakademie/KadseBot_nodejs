@@ -70,6 +70,7 @@ app.use(webpackHotMiddleware(compiler));
 require('mongoose').connect(config.get('db-url'));
 require('./model/userModel');
 require('./model/statisticModel');
+require('./model/apiModel');
 
 app.use(config.rootPath, require('./routes/public/publicRoutes'));
 app.use(`${config.rootPath}/api`, require('./routes/api/apiRoutes'));
