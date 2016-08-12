@@ -1,17 +1,12 @@
 
 module.exports = (() => {
-  function parseTable(cheerioHandle) {
+  function parseTable(cheerioHandle, selection) {
     const tableDictionary = {};
-    cheerioHandle('form table tr').each(function (id, elem) {
-      const children = cheerioHandle(this).children();
-      console.log(children.eq(0).text());
-      console.log(children.eq(1).text());
-      /*
-       cheerioHandle('td', elem).each(function (id2, elem2) {
-        console.log(elem2.text());
-      });
-       */
+    cheerioHandle(selection).each(function (id, elem) {
+      const children = cheerioHandle(elem).children();
+      tableDictionary[removeWhitespace(children.eq(0).text())] = children.eq(1).text();
     });
+    return tableDictionary;
   }
 
   function removeWhitespace(text) {
