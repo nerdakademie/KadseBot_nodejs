@@ -21,7 +21,7 @@ module.exports = (() => {
 
   function getApiUserByApiKey(apiKey, callback) {
     Api.findOne({api_key: apiKey}).exec((error, apiUser) => {
-      callback (apiUser);
+      callback(apiUser);
     });
   }
 
@@ -31,14 +31,13 @@ module.exports = (() => {
     });
   }
 
-  function getApiKey(username, password, callback){
-    isNAKUser(username, password, function(isNakusr)
-    {
-      if (isNakusr) {
-        Api.count({user: username}, function (err, count) {
-          if (err) {
-            callback(false);
-          } else if (count === 0) {
+  function getApiKey(username, password, callback) {
+    Api.count({user: username}, function (err, count) {
+      if (err) {
+        callback(false);
+      } else if (count === 0) {
+        isNAKUser(username, password, function (isNakusr) {
+          if (isNakusr) {
             getNAKAuthCookie(username, password, function (cookie) {
               if (cookie === false) {
                 callback(false);
@@ -59,24 +58,27 @@ module.exports = (() => {
                 });
               }
             });
-          } else if (count === 1) {
-            getApiUserByName(username, function (apiUser) {
-              if (cryptHelper.isPasswordCorrectSync(password, apiUser.pass)) {
-                callback({success: true, apikey: apiUser.api_key});
-              }
-            });
           } else {
             callback(false);
           }
         });
-      }else{
+      } else if (count === 1) {
+        getApiUserByName(username, function (apiUser) {
+          if (cryptHelper.isPasswordCorrectSync(password, apiUser.pass)) {
+            callback({success: true, apikey: apiUser.api_key});
+          }
+        });
+      } else {
         callback(false);
       }
     });
   }
 
   function getNAKAuthCookie(username, password, callback) {
-    request.post({url: 'https://cis.nordakademie.de/startseite/?no_cache=1', form: {logintype: "login", pid: 0, user: username, pass: password}}, function(err,httpResponse,body){
+    request.post({
+      url: 'https://cis.nordakademie.de/startseite/?no_cache=1',
+      form: {logintype: "login", pid: 0, user: username, pass: password}
+    }, function (err, httpResponse, body) {
       if (httpResponse.statusCode === 404) {
         callback(false);
       } else if (httpResponse.statusCode === 303) {
@@ -99,7 +101,7 @@ module.exports = (() => {
   function getNAKUserDetails(username, password, callback) {
     getNAKAuthCookie(username, password, function (cookieResult) {
       const ar = request.jar();
-      const cookie = request.cookie('fe_typo_user='+ cookieResult);
+      const cookie = request.cookie('fe_typo_user=' + cookieResult);
       const url = 'https://cis.nordakademie.de/nacommunity/mein-profil/?no_cache=1';
       ar.setCookie(cookie, url);
       request.get({url: url, jar: ar}, function (err, httpContent, body) {
@@ -111,7 +113,10 @@ module.exports = (() => {
   }
 
   function isNAKUser(username, password, callback) {
-    request.post({url: 'https://cis.nordakademie.de/startseite/?no_cache=1', form: {logintype: "login", pid: 0, user: username, pass: password}}, function (err,httpResponse,body) {
+    request.post({
+      url: 'https://cis.nordakademie.de/startseite/?no_cache=1',
+      form: {logintype: "login", pid: 0, user: username, pass: password}
+    }, function (err, httpResponse, body) {
       if (httpResponse.statusCode === 404) {
         callback(false);
       } else if (httpResponse.statusCode === 303) {
@@ -123,7 +128,7 @@ module.exports = (() => {
 
   function isCookieValid(nak_cookie, callback) {
     const ar = request.jar();
-    const cookie = request.cookie('fe_typo_user='+ nak_cookie);
+    const cookie = request.cookie('fe_typo_user=' + nak_cookie);
     const url = 'https://cis.nordakademie.de/pruefungsamt/pruefungsergebnisse/?no_cache=1';
     ar.setCookie(cookie, url);
     request.get({url: url, jar: ar}, function (err, httpResponse, body) {
