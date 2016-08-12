@@ -70,8 +70,7 @@ module.exports = (() => {
       ar.setCookie(cookie, url);
       request.get({url: url, jar: ar}, function (err, httpContent, body) {
         const $ = cheerio.load(body);
-        const data = $('form table');
-        utils.parseTable(data);
+        utils.parseTable($);
         // utils.parseTable($);
       });
     });

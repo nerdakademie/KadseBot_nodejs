@@ -2,7 +2,7 @@
 module.exports = (() => {
   function parseTable(cheerioHandle) {
     const tableDictionary = {};
-    cheerioHandle('tr').each(function (id, elem) {
+    cheerioHandle('form table tr').each(function (id, elem) {
       const children = cheerioHandle(this).children();
       console.log(children);
       /*
