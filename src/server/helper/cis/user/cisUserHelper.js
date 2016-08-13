@@ -7,7 +7,7 @@ module.exports = (() => {
   'use strict';
 
   function getNAKUserDetails(apikey, callback) {
-    cisUserAuthHelper.getTypoCookieByApiKey(apikey,function(typoCookie) {
+    cisUserAuthHelper.getValidTypoCookieByApiKey(apikey,function(typoCookie) {
       const ar = request.jar();
       const cookie = request.cookie('fe_typo_user=' + typoCookie);
       const url = 'https://cis.nordakademie.de/nacommunity/mein-profil/?no_cache=1';

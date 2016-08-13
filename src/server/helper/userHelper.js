@@ -37,7 +37,7 @@ module.exports = (() => {
     });
   }
 
-  function registerUser(username, password, callback){
+  function registerUser(username, password, callback) {
     User.count({nak_user: username}, function (err, count) {
       if (err) {
         callback('error: database error');

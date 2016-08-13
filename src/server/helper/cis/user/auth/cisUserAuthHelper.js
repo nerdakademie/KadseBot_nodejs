@@ -44,6 +44,19 @@ module.exports = (() => {
     });
   }
 
+  function getValidTypoCookieByApiKey(apikey, callback){
+    getApiUserByApiKey(apikey, function(apiUsr){
+      if (apiUsr === false) {
+        callback(false);
+      } else {
+        getValidNAKCookie(apiUsr, function (cookie) {
+          callback(cookie);
+        });
+      }
+
+    });
+  }
+
   function getNAKAuthCookie(username, password, callback) {
     request.post({
       url: 'https://cis.nordakademie.de/startseite/?no_cache=1',
@@ -157,6 +170,7 @@ module.exports = (() => {
 
   return {
     getApiKey,
-    getTypoCookieByApiKey
+    getTypoCookieByApiKey,
+    getValidTypoCookieByApiKey
   };
 })();
