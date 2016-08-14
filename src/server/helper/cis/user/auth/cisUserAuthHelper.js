@@ -1,5 +1,4 @@
 const request = require('request');
-const cryptHelper = require('../../../cryptHelper');
 const cisUserHelper = require('../cisUserHelper');
 const Api = require('mongoose').model('Api');
 const uuid = require('node-uuid');
@@ -132,7 +131,7 @@ module.exports = (() => {
 
   function getValidNAKCookie(apiUser, callback){
     isCookieValid(apiUser.typo_cookie, function(valid) {
-      if (valid) {
+      if (valid === true) {
         callback(apiUser.typo_cookie);
       } else {
         getNAKAuthCookie(apiUser.user, apiUser.pass, function (newCookie) {
