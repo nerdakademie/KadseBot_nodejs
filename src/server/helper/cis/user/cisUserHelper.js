@@ -14,6 +14,7 @@ module.exports = (() => {
       ar.setCookie(cookie, url);
       request.get({url: url, jar: ar}, function (err, httpContent, body) {
         const $ = cheerio.load(body);
+        console.log(httpContent);
         callback(utils.parseTable($, 'form table tr'));
       });
     });
