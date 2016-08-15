@@ -5,6 +5,7 @@ const uuid = require('node-uuid');
 
 module.exports = (() => {
   'use strict';
+
   function parseSetCookies(cookieArray) {
     const list = {};
     cookieArray.forEach(function (cookieItem) {
@@ -15,7 +16,6 @@ module.exports = (() => {
     });
     return list;
   }
-
 
   function getApiUserByApiKey(apiKey, callback) {
     Api.findOne({api_key: apiKey}).exec((error, apiUser) => {
@@ -37,14 +37,14 @@ module.exports = (() => {
     getApiUserByApiKey(apikey, function (apiuser) {
       if (apiuser === false) {
         callback(false);
-      }  {
+      } else {
         callback(apiuser.typo_cookie);
       }
     });
   }
 
   function getValidTypoCookieByApiKey(apikey, callback){
-    getApiUserByApiKey(apikey, function(apiUsr){
+    getApiUserByApiKey(apikey, function(apiUsr) {
       if (apiUsr === false) {
         callback(false);
       } else {
