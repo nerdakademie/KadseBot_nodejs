@@ -1,6 +1,6 @@
 
 module.exports = (() => {
-  function parseTable(cheerioHandle, selection) {
+  function parseTableDetails(cheerioHandle, selection) {
     const tableDictionary = {};
     cheerioHandle(selection).each(function (id, elem) {
       const children = cheerioHandle(elem).children();
@@ -12,12 +12,26 @@ module.exports = (() => {
     return tableDictionary;
   }
 
+  function parseTableGrades(cheerioHandle, selection, keys, elementCount) {
+    const tableDictionary = [];
+    cheerioHandle(selection).each(function (id, elem) {
+      const eachEntry = {};
+      const children = cheerioHandle(elem).children();
+      for (let count = 0; count < elementCount; count++) {
+        eachEntry[keys[count]] = removeWhitespace(children.eq(count).text());
+      }
+      tableDictionary.push(eachEntry);
+    });
+    return tableDictionary;
+  }
+
   function removeWhitespace(text) {
     return text.trim().replace(/\s\s+/g, '');
   }
 
   return {
     removeWhitespace,
-    parseTable
+    parseTableDetails,
+    parseTableGrades
   };
 })();

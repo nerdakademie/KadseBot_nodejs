@@ -16,7 +16,23 @@ module.exports = (() => {
     }
   }
 
+  function isNAKUser(request, response) {
+    if (request.body.username === null || request.body.password === null) {
+      response.status(404).json({nakuser: false, message: 'error wrong data specified'});
+      response.end();
+    } else {
+      cisUserAuthHelper.isNAKUser(request.body.username, request.body.password, function (result){
+        if (result) {
+          response.status(200).json({nakuser:true});
+        } else {
+          response.status(200).json({nakuser:false});
+        }
+      });
+    }
+  }
+
   return {
-    getApiKey
+    getApiKey,
+    isNAKUser
   };
 })();

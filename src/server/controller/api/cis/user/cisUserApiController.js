@@ -17,36 +17,31 @@ module.exports = (() => {
     }
   }
 
-  function isNAKUser(request, response) {
-    if (request.body.username === null || request.body.password === null) {
-      response.status(404).json({nakuser: false, message: 'error wrong data specified'});
-      response.end();
-    } else {
-      cisUserHelper.isNAKUser(request.body.username, request.body.password, function (result){
-        if (result) {
-          response.status(200).json({nakuser:true});
-        } else {
-          response.status(200).json({nakuser:false});
-        }
-      });
-    }
-  }
-
   function getUserDetails(request, response) {
     if (request.query.apikey === null) {
-      response.status(404).json({success: false,message: 'error wrong data specified'});
+      response.status(404).json({success: false, message: 'error wrong data specified'});
       response.end();
     } else {
-      cisUserHelper.getNAKUserDetails(request.query.apikey, function(userTable) {
+      cisUserHelper.getUserDetails(request.query.apikey, function(userTable) {
         response.json(userTable);
       });
     }
   }
 
+  function getGrades(request, response) {
+    if (request.query.apikey === null) {
+      response.status(404).json({success: false, message: 'error wrong data specified'});
+      response.end();
+    } else {
+      cisUserHelper.getGrades(request.query.apikey, function(userTable) {
+        response.json(userTable);
+      });
+    }
+  }
 
   return {
     getNAKAuthCookie,
     getUserDetails,
-    isNAKUser
+    getGrades
   };
 })();
