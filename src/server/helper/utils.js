@@ -1,5 +1,6 @@
 
 module.exports = (() => {
+  'use strict';
   function parseTableDetails(cheerioHandle, selection) {
     const tableDictionary = {};
     cheerioHandle(selection).each(function (id, elem) {
