@@ -29,11 +29,15 @@ module.exports = (() => {
 
   function getApiUserByName(username, callback) {
     Api.findOne({user: username}).exec((error, apiUser) => {
-      callback(apiUser);
+      if (error) {
+        callback(false);
+      } else {
+        callback(apiUser);
+      }
     });
   }
 
-  function getTypoCookieByApiKey(apikey, callback){
+  function getTypoCookieByApiKey(apikey, callback) {
     getApiUserByApiKey(apikey, function (apiuser) {
       if (apiuser === false) {
         callback(false);
@@ -81,7 +85,6 @@ module.exports = (() => {
   }
 
   function getApiKey(username, password, callback) {
-    console.log(username);
     Api.count({user: username}, function (err, count) {
       if (err) {
         callback(false);
@@ -93,6 +96,8 @@ module.exports = (() => {
         getApiUserByName(username, function (apiUser) {
           if (password === apiUser.pass) {
             callback({success: true, apikey: apiUser.api_key});
+          } else {
+            callback(false);
           }
         });
       } else {
