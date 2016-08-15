@@ -39,9 +39,21 @@ module.exports = (() => {
     }
   }
 
+  function getSeminars(request, response) {
+    if (request.query.apikey === null) {
+      response.status(404).json({success: false, message: 'error wrong data specified'});
+      response.end();
+    } else {
+      cisUserHelper.getSeminars(request.query.apikey, function(userTable) {
+        response.json(userTable);
+      });
+    }
+  }
+
   return {
     getNAKAuthCookie,
     getUserDetails,
-    getGrades
+    getGrades,
+    getSeminars
   };
 })();

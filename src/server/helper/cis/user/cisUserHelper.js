@@ -19,7 +19,7 @@ module.exports = (() => {
     });
   }
 
-  function getGrades(apikey, callback){
+  function getGrades(apikey, callback) {
     cisUserAuthHelper.getValidTypoCookieByApiKey(apikey, function(typoCookie) {
       const ar = request.jar();
       const cookie = request.cookie('fe_typo_user=' + typoCookie);
@@ -33,8 +33,23 @@ module.exports = (() => {
     });
   }
 
+  function getSeminars(apikey, callback) {
+    cisUserAuthHelper.getValidTypoCookieByApiKey(apikey, function(typoCookie) {
+      const ar = request.jar();
+      const cookie = request.cookie('fe_typo_user=' + typoCookie);
+      const url = 'https://cis.nordakademie.de/pruefungsamt/pruefungsergebnisse/?no_cache=1';
+      ar.setCookie(cookie, url);
+      request.get({url: url, jar: ar}, function (err, httpContent, body) {
+        const $ = cheerio.load(body);
+        const keys = ['description', 'period', 'grade', 'credits'];
+        callback(utils.parseTableGrades($, '#seminar table tbody tr', keys, keys.length));
+      });
+    });
+  }
+
   return {
     getUserDetails,
-    getGrades
+    getGrades,
+    getSeminars
   };
 })();

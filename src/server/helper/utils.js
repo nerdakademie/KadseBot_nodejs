@@ -6,7 +6,7 @@ module.exports = (() => {
     cheerioHandle(selection).each(function (id, elem) {
       const children = cheerioHandle(elem).children();
       const dictKey = removeWhitespace(children.eq(0).text());
-      if (dictKey.indexOf('ändern') === -1 && dictKey !== "") {
+      if (dictKey.indexOf('ändern') === -1 && dictKey !== '') {
         tableDictionary[dictKey] = children.eq(1).text().trim();
       }
     });
