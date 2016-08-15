@@ -50,7 +50,7 @@ module.exports = (() => {
     });
   }
 
-  function speiseplan(request, response) {
+  function getSpeiseplan(request, response) {
     let url = 'https://cis.nordakademie.de/service/tp-mensa/speiseplan.cmd';
     if (request.query.week !== null && request.query.year !== null) {
       // url= url + '?date=' + moment(''.concat(request.query.year, '-W', request.query.week, '-6')).unix() + '999&action=show';
@@ -72,6 +72,6 @@ module.exports = (() => {
   return {
     login,
     logout,
-    speiseplan
+    getSpeiseplan
   };
 })();
