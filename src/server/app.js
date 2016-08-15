@@ -77,7 +77,7 @@ app.use(`${config.rootPath}/api`, require('./routes/api/apiRoutes'));
 app.use(`${config.rootPath}/internal`, require('./routes/internal/internalRoutes'));
 app.use(`${config.rootPath}/telegram`, require('./routes/telegram/telegramRoutes'));
 // Swagger redirect
-app.use(`${config.rootPath}/docs`, express.static('dist'));
+app.use(`${config.rootPath}/docs`, express.static('swagger'));
 
 app.use(`${config.rootPath}/test`, require('./routes/test/testRoutes'));
 

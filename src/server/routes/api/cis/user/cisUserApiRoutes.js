@@ -3,7 +3,7 @@ const cisUserAuthApiRoutes = require('./auth/cisUserAuthApiRoutes');
 const router = require('express').Router();
 
 router.post('/isNAKUser', cisUserApiController.isNAKUser);
-router.post('getAuthCookie', cisUserApiController.getNAKAuthCookie);
+router.post('/getAuthCookie', cisUserApiController.getNAKAuthCookie);
 router.get('/getUserDetails', cisUserApiController.getUserDetails);
 router.use('/auth', cisUserAuthApiRoutes);
 
