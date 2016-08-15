@@ -20,20 +20,6 @@ module.exports = (() => {
     });
   }
 
-  function isNAKUser(username, password, callback) {
-    request.post({
-      url: 'https://cis.nordakademie.de/startseite/?no_cache=1',
-      form: {logintype: "login", pid: 0, user: username, pass: password}
-    }, function (err, httpResponse, body) {
-      if (httpResponse.statusCode === 404) {
-        callback(false);
-      } else if (httpResponse.statusCode === 303) {
-        // We are being redirected
-        callback(true);
-      }
-    });
-  }
-
   return {
     getNAKUserDetails,
     isNAKUser

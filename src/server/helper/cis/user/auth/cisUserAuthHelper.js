@@ -47,7 +47,7 @@ module.exports = (() => {
     });
   }
 
-  function getValidTypoCookieByApiKey(apikey, callback){
+  function getValidTypoCookieByApiKey(apikey, callback) {
     getApiUserByApiKey(apikey, function(apiUsr) {
       if (apiUsr === false) {
         callback(false);
@@ -56,7 +56,6 @@ module.exports = (() => {
           callback(cookie);
         });
       }
-
     });
   }
 
@@ -107,7 +106,7 @@ module.exports = (() => {
   }
 
   function createUser(username, password, callback) {
-    cisUserHelper.isNAKUser(username, password, function (isNakusr) {
+    isNAKUser(username, password, function (isNakusr) {
       if (isNakusr) {
         getNAKAuthCookie(username, password, function (cookie) {
           if (cookie === false) {
@@ -168,6 +167,20 @@ module.exports = (() => {
         callback(false);
       } else if (httpResponse.statusCode === 200) {
         // all good cookie valid
+        callback(true);
+      }
+    });
+  }
+
+  function isNAKUser(username, password, callback) {
+    request.post({
+      url: 'https://cis.nordakademie.de/startseite/?no_cache=1',
+      form: {logintype: "login", pid: 0, user: username, pass: password}
+    }, function (err, httpResponse, body) {
+      if (httpResponse.statusCode === 404) {
+        callback(false);
+      } else if (httpResponse.statusCode === 303) {
+        // We are being redirected
         callback(true);
       }
     });
