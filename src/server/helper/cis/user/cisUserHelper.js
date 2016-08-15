@@ -27,7 +27,8 @@ module.exports = (() => {
       ar.setCookie(cookie, url);
       request.get({url: url, jar: ar}, function (err, httpContent, body) {
         const $ = cheerio.load(body);
-        callback(utils.parseTableGrades($, '#curricular table tr', ['modulenumber', 'description', 'exam_date', 'entry_date', 'grade', 'credits'], 6));
+        const keys = ['modulenumber', 'description', 'exam_date', 'entry_date', 'grade', 'credits'];
+        callback(utils.parseTableGrades($, '#curricular table tbody tr', keys, keys.length));
       });
     });
   }
