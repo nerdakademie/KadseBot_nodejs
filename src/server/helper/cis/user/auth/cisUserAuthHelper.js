@@ -81,6 +81,7 @@ module.exports = (() => {
   }
 
   function getApiKey(username, password, callback) {
+    console.log(username);
     Api.count({user: username}, function (err, count) {
       if (err) {
         callback(false);
