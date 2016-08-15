@@ -2,7 +2,7 @@ const User = require('mongoose').model('User');
 const Userhelper = require('../../../helper/userHelper');
 const requestmodule = require('request');
 const cheerio = require('cheerio');
-const speiseplanHelper = require('../../../helper/speiseplanHelper');
+const speiseplanHelper = require('../../../helper/cis/speiseplanHelper');
 const moment = require('moment');
 
 module.exports = (() => {
@@ -53,8 +53,9 @@ module.exports = (() => {
   function speiseplan(request, response) {
     let url = 'https://cis.nordakademie.de/service/tp-mensa/speiseplan.cmd';
     if (request.query.week !== null && request.query.year !== null) {
-      url= url + '?date=' + moment(''.concat(request.query.year, '-W', request.query.week, '-6')).unix() + '999&action=show';
-    } else if (request.query.date !== undefined) {
+      // url= url + '?date=' + moment(''.concat(request.query.year, '-W', request.query.week, '-6')).unix() + '999&action=show';
+      url = url + '?date=' + moment('Monday').year(request.query.year).week(request.query.week).unix() + '999&action=show';
+    } else if (request.query.date !== null) {
       url= url + '?date=' + request.query.date + '999&action=show';
     }
     requestmodule(url, function(error, request_response, html) {
@@ -62,13 +63,11 @@ module.exports = (() => {
         const speisePlanPage = cheerio.load(html);
         response.json(speiseplanHelper.getMeals(speisePlanPage));
         response.end();
-      } else{
+      } else {
         response.end();
       }
     });
   }
-
-
 
   return {
     login,
