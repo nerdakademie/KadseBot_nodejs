@@ -9,7 +9,7 @@ const apiSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  api_key: {
+  user_key: {
     type: String,
     required: true
   },

@@ -17,8 +17,8 @@ module.exports = (() => {
     return list;
   }
 
-  function getApiUserByApiKey(apiKey, callback) {
-    Api.findOne({api_key: apiKey}).exec((error, apiUser) => {
+  function getApiUserByApiKey(userKey, callback) {
+    Api.findOne({user_key: userKey}).exec((error, apiUser) => {
       if (error) {
         callback(false);
       } else {
@@ -37,8 +37,8 @@ module.exports = (() => {
     });
   }
 
-  function getTypoCookieByApiKey(apikey, callback) {
-    getApiUserByApiKey(apikey, function (apiuser) {
+  function getTypoCookieByApiKey(userkey, callback) {
+    getApiUserByApiKey(userkey, function (apiuser) {
       if (apiuser === false) {
         callback(false);
       } else {
@@ -47,8 +47,8 @@ module.exports = (() => {
     });
   }
 
-  function getValidTypoCookieByApiKey(apikey, callback) {
-    getApiUserByApiKey(apikey, function(apiUsr) {
+  function getValidTypoCookieByApiKey(userKey, callback) {
+    getApiUserByApiKey(userKey, function(apiUsr) {
       if (apiUsr === false) {
         callback(false);
       } else {
@@ -83,7 +83,7 @@ module.exports = (() => {
     });
   }
 
-  function getApiKey(username, password, callback) {
+  function getUserKey(username, password, callback) {
     Api.count({user: username}, function (err, count) {
       if (err) {
         callback(false);
@@ -112,18 +112,18 @@ module.exports = (() => {
           if (cookie === false) {
             callback(false);
           } else {
-            const apiKey = uuid.v4();
+            const userKey = uuid.v4();
             const api = new Api({
               user: username,
               pass: password,
-              api_key: apiKey,
+              user_key: userKey,
               typo_cookie: cookie
             });
             api.save((error) => {
               if (error) {
                 callback(false);
               } else {
-                callback({sucess: true, apikey: apiKey});
+                callback({sucess: true, userkey: userKey});
               }
             });
           }
@@ -134,7 +134,7 @@ module.exports = (() => {
     });
   }
 
-  function getValidNAKCookie(apiUser, callback){
+  function getValidNAKCookie(apiUser, callback) {
     isCookieValid(apiUser.typo_cookie, function(valid) {
       if (valid === true) {
         callback(apiUser.typo_cookie);
@@ -187,7 +187,7 @@ module.exports = (() => {
   }
 
   return {
-    getApiKey,
+    getUserKey,
     getTypoCookieByApiKey,
     getValidTypoCookieByApiKey
   };

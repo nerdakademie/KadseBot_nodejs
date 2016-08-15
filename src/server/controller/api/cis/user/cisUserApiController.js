@@ -18,33 +18,33 @@ module.exports = (() => {
   }
 
   function getUserDetails(request, response) {
-    if (request.query.apikey === null) {
+    if (request.query.userkey === null) {
       response.status(404).json({success: false, message: 'error wrong data specified'});
       response.end();
     } else {
-      cisUserHelper.getUserDetails(request.query.apikey, function(userTable) {
+      cisUserHelper.getUserDetails(request.query.userkey, function(userTable) {
         response.json(userTable);
       });
     }
   }
 
   function getGrades(request, response) {
-    if (request.query.apikey === null) {
+    if (request.query.userkey === null) {
       response.status(404).json({success: false, message: 'error wrong data specified'});
       response.end();
     } else {
-      cisUserHelper.getGrades(request.query.apikey, function(userTable) {
+      cisUserHelper.getGrades(request.query.userkey, function(userTable) {
         response.json(userTable);
       });
     }
   }
 
   function getSeminars(request, response) {
-    if (request.query.apikey === null) {
+    if (request.query.userkey === null) {
       response.status(404).json({success: false, message: 'error wrong data specified'});
       response.end();
     } else {
-      cisUserHelper.getSeminars(request.query.apikey, function(userTable) {
+      cisUserHelper.getSeminars(request.query.userkey, function(userTable) {
         response.json(userTable);
       });
     }
