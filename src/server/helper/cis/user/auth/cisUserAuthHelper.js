@@ -189,6 +189,7 @@ module.exports = (() => {
   return {
     getUserKey,
     getTypoCookieByApiKey,
-    getValidTypoCookieByApiKey
+    getValidTypoCookieByApiKey,
+    isNAKUser
   };
 })();
