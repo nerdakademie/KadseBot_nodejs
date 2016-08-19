@@ -57,6 +57,7 @@ module.exports = (() => {
       url = url + '?date=' + moment().day('Monday').year(request.query.year).week(request.query.week).unix() + '999&action=show';
     } else if (request.query.date !== undefined) {
       url= url + '?date=' + request.query.date + '999&action=show';
+
     }
     requestmodule(url, function(error, request_response, html) {
       if (!error && request_response.statusCode === 200) {
