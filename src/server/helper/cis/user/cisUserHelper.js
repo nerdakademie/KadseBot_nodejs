@@ -33,8 +33,8 @@ module.exports = (() => {
     });
   }
 
-  function getSeminars(apikey, callback) {
-    cisUserAuthHelper.getValidTypoCookieByApiKey(apikey, function(typoCookie) {
+  function getSeminarsParticipated(userkey, callback) {
+    cisUserAuthHelper.getValidTypoCookieByApiKey(userkey, function(typoCookie) {
       const ar = request.jar();
       const cookie = request.cookie('fe_typo_user=' + typoCookie);
       const url = 'https://cis.nordakademie.de/pruefungsamt/pruefungsergebnisse/?no_cache=1';
@@ -47,9 +47,28 @@ module.exports = (() => {
     });
   }
 
+  function getSeminars(userkey, week, quarter, callback){
+    cisUserAuthHelper.getValidTypoCookieByApiKey(userkey, function (typoCookie) {
+      if (typoCookie === false) {
+        callback(false);
+      } else {
+        const ar = request.jar();
+        const cookie = request.cookie('fe_typo_user=' + typoCookie);
+        const url = 'https://cis.nordakademie.de/seminarwesen/?tx_nasemdb_pi1[action]=programm';
+        ar.setCookie(cookie, url);
+        request.get({url: url, jar: ar}, function (err, httpContent, body) {
+          const $ = cheerio.load(body);
+          const keys = ['description', 'period', 'grade', 'credits'];
+          callback(utils.parseTableGrades($, 'table tbody tr', keys, keys.length));
+        });
+      }
+    });
+  }
+
   return {
     getUserDetails,
     getGrades,
+    getSeminarsParticipated,
     getSeminars
   };
 })();

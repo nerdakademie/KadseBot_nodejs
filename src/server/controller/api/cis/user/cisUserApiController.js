@@ -39,7 +39,18 @@ module.exports = (() => {
     }
   }
 
-  function getSeminars(request, response) {
+  function getSeminarsParticipated(request, response) {
+    if (request.query.userkey === null) {
+      response.status(404).json({success: false, message: 'error wrong data specified'});
+      response.end();
+    } else {
+      cisUserHelper.getSeminarsParticipated(request.query.userkey, function(userTable) {
+        response.json(userTable);
+      });
+    }
+  }
+
+  function getAvailableSeminars(request, response) {
     if (request.query.userkey === null) {
       response.status(404).json({success: false, message: 'error wrong data specified'});
       response.end();
@@ -54,6 +65,7 @@ module.exports = (() => {
     getNAKAuthCookie,
     getUserDetails,
     getGrades,
-    getSeminars
+    getSeminarsParticipated,
+    getAvailableSeminars
   };
 })();
