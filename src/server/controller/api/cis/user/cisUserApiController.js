@@ -55,7 +55,7 @@ module.exports = (() => {
       response.status(404).json({success: false, message: 'error wrong data specified'});
       response.end();
     } else {
-      cisUserHelper.getSeminars(request.query.userkey, function(userTable) {
+      cisUserHelper.getSeminars(request.query.userkey, 0, 0, function(userTable) {
         response.json(userTable);
       });
     }

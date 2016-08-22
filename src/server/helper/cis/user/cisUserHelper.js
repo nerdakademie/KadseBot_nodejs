@@ -47,7 +47,7 @@ module.exports = (() => {
     });
   }
 
-  function getSeminars(userkey, week, quarter, callback){
+  function getSeminars(userkey, week, quarter, callback) {
     cisUserAuthHelper.getValidTypoCookieByApiKey(userkey, function (typoCookie) {
       if (typoCookie === false) {
         callback(false);
