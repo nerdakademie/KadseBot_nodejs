@@ -1,5 +1,7 @@
 const request = require('request');
-const cheerio = require('cheerio');
+let cheerio = require('cheerio');
+const cheerioAdv = require('cheerio-advanced-selectors');
+cheerio = cheerioAdv.wrap(cheerio);
 const utils = require('../../utils');
 const cisUserAuthHelper = require('./auth/cisUserAuthHelper');
 
@@ -59,7 +61,7 @@ module.exports = (() => {
         request.get({url: url, jar: ar}, function (err, httpContent, body) {
           const $ = cheerio.load(body);
           const keys = ['description', 'period', 'grade', 'credits'];
-          callback(utils.parseTableGrades($, 'table tbody tr', keys, keys.length));
+          callback(utils.parseTableGrades($, 'table:last tbody tr', keys, keys.length));
         });
       }
     });
