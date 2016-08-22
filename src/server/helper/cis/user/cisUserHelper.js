@@ -1,3 +1,4 @@
+'use strict';
 const request = require('request');
 let cheerio = require('cheerio');
 const cheerioAdv = require('cheerio-advanced-selectors');
