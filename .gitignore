@@ -5,3 +5,4 @@
 /resources/server/public/js/
 /resources/server/public/*.js
 /target/
+*.json.gzip

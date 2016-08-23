@@ -1,8 +1,6 @@
-'use strict';
 const request = require('request');
-let cheerio = require('cheerio');
+const cheerio = require('cheerio');
 const cheerioAdv = require('cheerio-advanced-selectors');
-cheerio = cheerioAdv.wrap(cheerio);
 const utils = require('../../utils');
 const cisUserAuthHelper = require('./auth/cisUserAuthHelper');
 
@@ -31,7 +29,7 @@ module.exports = (() => {
       request.get({url: url, jar: ar}, function (err, httpContent, body) {
         const $ = cheerio.load(body);
         const keys = ['modulenumber', 'description', 'exam_date', 'entry_date', 'grade', 'credits'];
-        callback(utils.parseTableGrades($, '#curricular table tbody tr', keys, keys.length));
+        callback(utils.parseTable($, '#curricular table tbody tr', keys, keys.length));
       });
     });
   }
@@ -45,12 +43,36 @@ module.exports = (() => {
       request.get({url: url, jar: ar}, function (err, httpContent, body) {
         const $ = cheerio.load(body);
         const keys = ['description', 'period', 'grade', 'credits'];
-        callback(utils.parseTableGrades($, '#seminar table tbody tr', keys, keys.length));
+        callback(utils.parseTable($, '#seminar table tbody tr', keys, keys.length));
       });
     });
   }
 
-  function getSeminars(userkey, week, quarter, callback) {
+  function getSeminars(userkey, year, quarter, callback) {
+    cisUserAuthHelper.getValidTypoCookieByApiKey(userkey, function (typoCookie) {
+      if (typoCookie === false) {
+        callback(false);
+      } else {
+        const ar = request.jar();
+        const cookie = request.cookie('fe_typo_user=' + typoCookie);
+        const url = 'https://cis.nordakademie.de/seminarwesen/?tx_nasemdb_pi1[action]=programm';
+        //const form = {};
+        //form['tx_nasemdb_pi1[quartal]'] = utils.getSeminarQuarterID(year,quarter);
+        //const form = {'tx_nasemdb_pi1[quartal]' : utils.getSeminarQuarterID(year,quarter)};
+        //console.log(form);
+        ar.setCookie(cookie, url);
+        request.get({url: url, jar: ar}, function (error, httpContent, body) {
+          console.log(httpContent.post);
+          const $ = cheerio.load(body);
+          const keys = ['description', 'from', 'to', 'grade', 'credits'];
+          callback(utils.parseAvailableSeminarsTable($, 'table',2 , 'tr',1));
+
+        });
+      }
+    });
+  }
+
+  function getSeminarsSwitchCase(userkey,callback){
     cisUserAuthHelper.getValidTypoCookieByApiKey(userkey, function (typoCookie) {
       if (typoCookie === false) {
         callback(false);
@@ -59,10 +81,23 @@ module.exports = (() => {
         const cookie = request.cookie('fe_typo_user=' + typoCookie);
         const url = 'https://cis.nordakademie.de/seminarwesen/?tx_nasemdb_pi1[action]=programm';
         ar.setCookie(cookie, url);
-        request.get({url: url, jar: ar}, function (err, httpContent, body) {
+        request.get({url: url, jar: ar}, function (error, httpContent, body) {
           const $ = cheerio.load(body);
-          const keys = ['description', 'period', 'grade', 'credits'];
-          callback(utils.parseTableGrades($, 'table:last tbody tr', keys, keys.length));
+          //console.log($('table').eq(1).find('td').eq(2).find('option').html());
+          console.log('switch(year_quarter){')
+          $('table').eq(1).find('td').eq(2).find('select').each(function (id, elem) {
+            const children = $(elem).children();
+            for(let i=0;i<children.length;i++){
+              console.log('   case \''+children.eq(i).text()+'\':')
+              console.log('       return '+children.eq(i).attr('value')+';');
+              console.log('       break;');
+            }
+          console.log('   default:');
+          console.log('       break;');
+          console.log('}');
+          });
+          callback(false);
+
         });
       }
     });
@@ -72,6 +107,7 @@ module.exports = (() => {
     getUserDetails,
     getGrades,
     getSeminarsParticipated,
-    getSeminars
+    getSeminars,
+    getSeminarsSwitchCase
   };
 })();

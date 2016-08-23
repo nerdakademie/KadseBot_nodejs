@@ -51,11 +51,11 @@ module.exports = (() => {
   }
 
   function getAvailableSeminars(request, response) {
-    if (request.query.userkey === null) {
+    if (request.query.userkey === undefined || request.query.year === undefined, request.query.quarter === undefined) {
       response.status(404).json({success: false, message: 'error wrong data specified'});
       response.end();
     } else {
-      cisUserHelper.getSeminars(request.query.userkey, 0, 0, function(userTable) {
+      cisUserHelper.getSeminars(request.query.userkey, request.query.year, request.query.quarter, function(userTable) {
         response.json(userTable);
       });
     }
