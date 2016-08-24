@@ -61,7 +61,7 @@ module.exports = (() => {
     }
   }
 
-  function getSeminarParticipants(request, response) {
+  function getSeminarInfo(request, response) {
     if (request.query.userkey === undefined || request.params.seminarid === null) {
       response.status(404).json({success: false, message: 'error wrong data specified'});
       response.end();
@@ -79,6 +79,6 @@ module.exports = (() => {
     getGrades,
     getSeminarsParticipated,
     getAvailableSeminars,
-    getSeminarParticipants
+    getSeminarInfo
   };
 })();

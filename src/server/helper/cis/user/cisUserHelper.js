@@ -157,8 +157,6 @@ module.exports = (() => {
     getSeminarsParticipated,
     getSeminars,
     getSeminarsSwitchCase,
-    getSeminarParticipants,
-    getSeminarDetails,
     getSeminarInfo
   };
 })();

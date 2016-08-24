@@ -7,7 +7,7 @@ router.get('/getUserDetails', cisUserApiController.getUserDetails);
 router.get('/getGrades', cisUserApiController.getGrades);
 //router.get('/getSeminarsParticipated', cisUserApiController.getSeminarParticipated);
 router.get('/seminars', cisUserApiController.getAvailableSeminars);
-router.get("/seminars/:seminarid", cisUserApiController.getSeminarParticipants);
+router.get("/seminars/:seminarid", cisUserApiController.getSeminarInfo);
 router.use('/auth', cisUserAuthApiRoutes);
 
 module.exports = router;
