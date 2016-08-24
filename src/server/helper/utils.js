@@ -27,6 +27,38 @@ module.exports = (() => {
     return tableDictionary;
   }
 
+  function parseTableAdvanced(cheerioHandle, selection, eqElement, afterEqSelection, keys, elementCount, rowoffset,columnoffset) {
+    const tableDictionary = [];
+    cheerioHandle(selection).eq(eqElement).find(afterEqSelection).each(function (id, elem) {
+      if (rowoffset === null || id >= rowoffset) {
+        const eachEntry = {};
+        const children = cheerioHandle(elem).children();
+        for (let count = columnoffset; count < elementCount + columnoffset; count++) {
+          console.log(children.eq(count).text());
+          eachEntry[keys[count-columnoffset]] = removeWhitespace(children.eq(count).text());
+        }
+        tableDictionary.push(eachEntry);
+      }
+    });
+    return tableDictionary;
+  }
+
+  function parseTableAdvancedColumn(cheerioHandle, selection, eqElement, afterEqSelection, keys, elementCount, rowoffset, columndata) {
+    const tableDictionary = {};
+    let emptycolumns = 0;
+    cheerioHandle(selection).eq(eqElement).find(afterEqSelection).each(function (id, elem) {
+      if (rowoffset === null || id >= rowoffset) {
+        const children = cheerioHandle(elem).children();
+        if(removeWhitespace(children.eq(0).text()).length === 0){
+          emptycolumns= emptycolumns + 1;
+        }else{
+          tableDictionary[keys[id -emptycolumns - rowoffset]] = removeWhitespace(children.eq(columndata).text());
+        }
+      }
+    });
+    return tableDictionary;
+  }
+
   function parseAvailableSeminarsTable(cheerioHandle, selection, eqElement, afterEqSelection, offset) {
     const tableDictionary = [];
     cheerioHandle(selection).eq(eqElement).find(afterEqSelection).each(function (id, elem) {
@@ -173,6 +205,8 @@ module.exports = (() => {
     parseTableDetails,
     parseTable,
     parseAvailableSeminarsTable,
-    getSeminarQuarterID
+    getSeminarQuarterID,
+    parseTableAdvanced,
+    parseTableAdvancedColumn
   };
 })();

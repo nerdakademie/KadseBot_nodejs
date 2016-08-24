@@ -61,11 +61,24 @@ module.exports = (() => {
     }
   }
 
+  function getSeminarParticipants(request, response) {
+    if (request.query.userkey === undefined || request.params.seminarid === null) {
+      response.status(404).json({success: false, message: 'error wrong data specified'});
+      response.end();
+    } else {
+      cisUserHelper.getSeminarInfo(request.query.userkey,request.params.seminarid, function(userTable) {
+        response.json(userTable);
+      });
+    }
+  }
+
+
   return {
     getNAKAuthCookie,
     getUserDetails,
     getGrades,
     getSeminarsParticipated,
-    getAvailableSeminars
+    getAvailableSeminars,
+    getSeminarParticipants
   };
 })();

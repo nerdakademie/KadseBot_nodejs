@@ -72,6 +72,54 @@ module.exports = (() => {
     });
   }
 
+  function getSeminarParticipants(userkey, seminarid, callback){
+    cisUserAuthHelper.getValidTypoCookieByApiKey(userkey, function(typoCookie) {
+      const ar = request.jar();
+      const cookie = request.cookie('fe_typo_user=' + typoCookie);
+      const url = 'https://cis.nordakademie.de/seminarwesen/?tx_nasemdb_pi1[action]=teilnehmerliste&tx_nasemdb_pi1[seminarnr]=' +seminarid;
+      ar.setCookie(cookie, url);
+      request.get({url: url, jar: ar}, function (err, httpContent, body) {
+        const $ = cheerio.load(body);
+        const keys = ['name', 'surname', 'centuria'];
+        callback(utils.parseTableAdvanced($, 'blockquote table', 1, 'tr', keys, keys.length,1,1));
+      });
+    });
+  }
+
+  function getSeminarInfo(userkey, seminarid, callback){
+    const returnObject = {};
+    let counter=0;
+    getSeminarDetails(userkey,seminarid,function (detailObject){
+      returnObject.details = detailObject;
+      counter = counter + 1;
+      if(counter >1){
+        callback(returnObject);
+      }
+    });
+    getSeminarParticipants(userkey,seminarid,function (participantsArray){
+      returnObject.participants = participantsArray;
+      counter = counter + 1;
+      if(counter >1){
+        callback(returnObject);
+      }
+    })
+  }
+
+
+  function getSeminarDetails(userkey, seminarid, callback){
+    cisUserAuthHelper.getValidTypoCookieByApiKey(userkey, function(typoCookie) {
+      const ar = request.jar();
+      const cookie = request.cookie('fe_typo_user=' + typoCookie);
+      const url = 'https://cis.nordakademie.de/seminarwesen/?tx_nasemdb_pi1[action]=beschreibung&tx_nasemdb_pi1[seminarnr]=' +seminarid;
+      ar.setCookie(cookie, url);
+      request.get({url: url, jar: ar}, function (err, httpContent, body) {
+        const $ = cheerio.load(body);
+        const keys = ['title', 'lecturer', 'cv','content', 'script', 'goal', 'workload', 'contact_hours', 'credits', 'examination'];
+        callback(utils.parseTableAdvancedColumn($, 'table', 1, 'tr', keys, keys.length,0,1));
+      });
+    });
+  }
+
   function getSeminarsSwitchCase(userkey,callback){
     cisUserAuthHelper.getValidTypoCookieByApiKey(userkey, function (typoCookie) {
       if (typoCookie === false) {
@@ -108,6 +156,9 @@ module.exports = (() => {
     getGrades,
     getSeminarsParticipated,
     getSeminars,
-    getSeminarsSwitchCase
+    getSeminarsSwitchCase,
+    getSeminarParticipants,
+    getSeminarDetails,
+    getSeminarInfo
   };
 })();
