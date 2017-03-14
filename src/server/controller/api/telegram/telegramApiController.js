@@ -1,4 +1,5 @@
 const TelegramHelper = require('../../../helper/TelegramHelper');
+const SlackHelper = require('../../../helper/SlackHelper');
 const StringHelper = require('../../../helper/StringHelper');
 module.exports = (() => {
   function sendMessage(request, response) {
@@ -9,6 +10,7 @@ module.exports = (() => {
   function webHook(request, response) {
     const json = request.body;
     const {text} = request.body.message;
+    const {id}  = request.body.message.chat;
     if(StringHelper.isNullOrEmptyString(text)) {
       return response.status(400).json({success: false,
         error: {text: 'No message text supplied'}});
@@ -16,7 +18,9 @@ module.exports = (() => {
     if(text.substring(0,1) === '/') {
       TelegramHelper.executeCommand(json);
     } else {
-
+      if(id === config.get('telegram_chat_id')) {
+        SlackHelper.sendMessageFromTelegram(request.body);
+      }
     }
     response.end();
   }
