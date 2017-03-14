@@ -18,7 +18,7 @@ module.exports = (() => {
         error: {text: 'Wrong webhook token'}});
     }
 
-    if(user_name !== 'kadsebot') {
+    if(user_name !== 'slackbot') {
       TelegramHelper.sendMessage(config.get('telegram_chat_id'), `${user_name}: ${text}`);
     }
     response.end();
