@@ -2,8 +2,7 @@ const SlackBot = require('slackbots');
 const config = require('config');
 const StringHelper = require('./StringHelper');
 const bot = new SlackBot({
-  token: config.get('slack_bot_token'),
-  name: 'KadseBot'
+  token: config.get('slack_bot_token')
 });
 
 module.exports = (() => {
