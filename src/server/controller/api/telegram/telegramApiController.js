@@ -1,6 +1,7 @@
 const TelegramHelper = require('../../../helper/TelegramHelper');
 const SlackHelper = require('../../../helper/SlackHelper');
 const StringHelper = require('../../../helper/StringHelper');
+const config = require('config');
 module.exports = (() => {
   function sendMessage(request, response) {
     const json = request.body;
