@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
 
-webpackClientDevConfig.output.publicPath = config.rootPath;
+/*webpackClientDevConfig.output.publicPath = config.rootPath;
 const compiler = webpack(webpackClientDevConfig);
 const publicWebpackDevMiddleware = webpackDevMiddleware(compiler, {
   publicPath: webpackClientDevConfig.output.publicPath,
@@ -43,7 +43,7 @@ const publicWebpackDevMiddleware = webpackDevMiddleware(compiler, {
 });
 
 app.use(publicWebpackDevMiddleware);
-app.use(webpackHotMiddleware(compiler));
+app.use(webpackHotMiddleware(compiler));*/
 
 require('mongoose').connect(config.get('db-url'));
 require('./model/userModel');

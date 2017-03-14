@@ -18,7 +18,6 @@ module.exports = {
   }],
   plugins: [
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
     new ExtractTextPlugin('css/main.css'),
     new ExtractTextPlugin('css/login.css')
