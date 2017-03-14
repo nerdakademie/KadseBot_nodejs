@@ -5,9 +5,7 @@ const compression = require('compression');
 const consolidate = require('consolidate');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
 const argv = require('minimist')(process.argv.slice(2));
-const swagger = require('swagger-node-express');
 const path = require('path');
 
 const webpack = require('webpack');
