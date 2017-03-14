@@ -2,5 +2,9 @@
   "port": 8989,
   "env": "local",
   "rootPath": "",
-  "db-url": "mongodb://localhost:27017/kadse"
+  "db-url": "mongodb://localhost:27017/kadse",
+  "slack_webhook_token": "",
+  "telegram_bot_token": "",
+  "telegram_chat_id": -1,
+  "slack_bot_token":""
 }

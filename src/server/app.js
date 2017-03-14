@@ -9,10 +9,6 @@ const argv = require('minimist')(process.argv.slice(2));
 const path = require('path');
 
 const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const webpackClientDevConfig = require('../../resources/client/webpack/webpack-client-dev.config.js');
-
 const app = express();
 
 app.disable('x-powered-by');
@@ -30,20 +26,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-
-
-/*webpackClientDevConfig.output.publicPath = config.rootPath;
-const compiler = webpack(webpackClientDevConfig);
-const publicWebpackDevMiddleware = webpackDevMiddleware(compiler, {
-  publicPath: webpackClientDevConfig.output.publicPath,
-  stats: {
-    colors: true,
-    chunks: false
-  }
-});
-
-app.use(publicWebpackDevMiddleware);
-app.use(webpackHotMiddleware(compiler));*/
 
 require('mongoose').connect(config.get('db-url'));
 require('./model/userModel');
