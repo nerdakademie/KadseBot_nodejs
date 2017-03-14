@@ -3,9 +3,9 @@ const config = require('config');
 const StringHelper = require('./StringHelper');
 const bot = new SlackBot({
   token: config.get('slack_bot_token'),
-  name: 'TelegramBridge',
-  icon_url: 'https://raw.githubusercontent.com/telegramdesktop/tdesktop/master/Telegram/Resources/art/icon128.png'
-});
+  name: 'TelegramBridge'});
+
+
 
 module.exports = (() => {
   'use strict';
@@ -26,7 +26,7 @@ module.exports = (() => {
       name = 'unknown'
     }
 
-    bot.postMessageToChannel('general', `${name}: ${text}`);
+    bot.postMessageToChannel('general', `${name}: ${text}`,{icon_url: 'https://raw.githubusercontent.com/telegramdesktop/tdesktop/master/Telegram/Resources/art/icon128.png'});
   }
 
   return {
