@@ -7,7 +7,8 @@ module.exports = (() => {
     response.end();
   }
   function webHook(request, response) {
-    const json = request.body;
+    console.log(request.body);
+    /*const json = request.body;
     const {text} = request.body.message;
     if(StringHelper.isNullOrEmptyString(text)) {
       return response.status(400).json({success: false,
@@ -17,7 +18,7 @@ module.exports = (() => {
       TelegramHelper.executeCommand(json);
     } else {
 
-    }
+    }*/
     response.end();
   }
   return {
