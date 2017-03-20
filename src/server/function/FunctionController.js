@@ -5,8 +5,8 @@ const error = require('./modules/error');
 module.exports = class FunctionController {
 
   constructor(){
-    this.moduleList = [new echo];
-    this.error = new error;
+    this.moduleList = [new echo()];
+    this.error = new error();
     this.botName = 'KadseBot'
   }
 
@@ -54,7 +54,7 @@ module.exports = class FunctionController {
       payload.parameters = this.getParams(JsonData.message.text);
     }
 
-    for(const module in this.moduleList) {
+    for(const module of this.moduleList) {
       if(`/${module.getCommand()}` === command) {
         return module.executeCommand(commandSource,payload);
       }
