@@ -9,9 +9,8 @@ module.exports = class FunctionController {
     this.error = new error;
     this.botName = 'KadseBot'
   }
-  
 
-  private getCommand(inputData) {
+  getCommand(inputData) {
     let command = inputData.toLowerCase();
     if (contains(inputData, ' ')) {
       command = command.split(' ')[0];
@@ -24,7 +23,7 @@ module.exports = class FunctionController {
     return command;
   }
 
-  private getParams(inputData) {
+  getParams(inputData) {
     const params = inputData.split(' ');
     if (contains(inputData, ' @'.concat(this.botName))) {
       return params.slice(2);
