@@ -10,14 +10,18 @@ module.exports = class FunctionController {
     this.botName = 'KadseBot'
   }
 
+  contains(origstring, compare) {
+    return origstring.indexOf(compare) > -1;
+  }
+
   getCommand(inputData) {
     let command = inputData.toLowerCase();
-    if (contains(inputData, ' ')) {
+    if (this.contains(inputData, ' ')) {
       command = command.split(' ')[0];
     }
-    if (contains(command, '@'.concat(this.botName.toLowerCase()))) {
+    if (this.contains(command, '@'.concat(this.botName.toLowerCase()))) {
       return command.replace('@'.concat(this.botName.toLowerCase()), '');
-    } else if (contains(command, ' @'.concat(this.botName.toLowerCase()))) {
+    } else if (this.contains(command, ' @'.concat(this.botName.toLowerCase()))) {
       return command.replace(' @'.concat(this.botName.toLowerCase()), '');
     }
     return command;
@@ -25,7 +29,7 @@ module.exports = class FunctionController {
 
   getParams(inputData) {
     const params = inputData.split(' ');
-    if (contains(inputData, ' @'.concat(this.botName))) {
+    if (this.contains(inputData, ' @'.concat(this.botName))) {
       return params.slice(2);
     } else {
       return params.slice(1);
