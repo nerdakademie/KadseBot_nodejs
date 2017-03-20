@@ -12,7 +12,7 @@ module.exports = class debug extends Module {
   }
 
   executeCommand(commandSource, payload){
-    super.sendMessage(commandSource, payload.original, payload.original);
+    super.sendMessage(commandSource, JSON.stringify(payload.original), payload.original);
   }
 
 };
