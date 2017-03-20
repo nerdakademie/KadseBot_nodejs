@@ -39,7 +39,7 @@ module.exports = class Module {
     throw new TypeError("Do not call abstract method foo from child.");
   }
 
-  static sendMessage(commandSource, text, originalJSON) {
+  sendMessage(commandSource, text, originalJSON) {
     if(commandSource === this.telegram) {
       telegramBot.sendMessage(this.getChatID(originalJSON), text);
     } else if(commandSource === this.slack) {
