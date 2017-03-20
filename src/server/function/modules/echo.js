@@ -1,7 +1,5 @@
 'use strict';
-
-import Module from '../Module';
-
+const Module = require('../Module');
 module.exports = class echo extends Module {
 
   constructor(){
