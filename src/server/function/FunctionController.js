@@ -7,27 +7,26 @@ module.exports = class FunctionController {
   constructor(){
     this.moduleList = [new echo];
     this.error = new error;
+    this.botName = 'KadseBot'
   }
   
-  private static botName = 'KadseBot';
-
 
   private getCommand(inputData) {
     let command = inputData.toLowerCase();
     if (contains(inputData, ' ')) {
       command = command.split(' ')[0];
     }
-    if (contains(command, '@'.concat(FunctionController.botName.toLowerCase()))) {
-      return command.replace('@'.concat(FunctionController.botName.toLowerCase()), '');
-    } else if (contains(command, ' @'.concat(FunctionController.botName.toLowerCase()))) {
-      return command.replace(' @'.concat(FunctionController.botName.toLowerCase()), '');
+    if (contains(command, '@'.concat(this.botName.toLowerCase()))) {
+      return command.replace('@'.concat(this.botName.toLowerCase()), '');
+    } else if (contains(command, ' @'.concat(this.botName.toLowerCase()))) {
+      return command.replace(' @'.concat(this.botName.toLowerCase()), '');
     }
     return command;
   }
 
   private getParams(inputData) {
     const params = inputData.split(' ');
-    if (contains(inputData, ' @'.concat(FunctionController.botName))) {
+    if (contains(inputData, ' @'.concat(this.botName))) {
       return params.slice(2);
     } else {
       return params.slice(1);
