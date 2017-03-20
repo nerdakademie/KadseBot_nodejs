@@ -3,11 +3,12 @@ const echo = require('./modules/echo');
 const error = require('./modules/error');
 const debug = require('./modules/debug');
 const decide = require('./modules/decide');
+const roulette = require('./modules/roulette');
 
 module.exports = class FunctionController {
 
   constructor(){
-    this.moduleList = [new echo(), new debug(), new decide()];
+    this.moduleList = [new echo(), new debug(), new decide(), new roulette()];
     this.error = new error();
     this.botName = 'KadseBot'
   }
