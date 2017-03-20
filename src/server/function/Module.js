@@ -9,8 +9,6 @@ const slackBot = new SlackBot({
 
 module.exports = class Module {
 
-  static slack = 0;
-  static telegram = 1;
 
   constructor() {
     if (this.constructor === Module) {
@@ -22,6 +20,8 @@ module.exports = class Module {
     if (this.executeCommand === Module.prototype.executeCommand) {
       throw new TypeError("Please implement abstract method executeCommand.");
     }
+    this.slack = 0;
+    this.telegram = 1
   }
   // An abstract method.
   getCommand() {
@@ -40,14 +40,14 @@ module.exports = class Module {
   }
 
   static sendMessage(commandSource, text, originalJSON) {
-    if(commandSource === Module.telegram) {
-      telegramBot.sendMessage(Module.getChatID(originalJSON), text);
-    } else if(commandSource === Module.slack) {
+    if(commandSource === this.telegram) {
+      telegramBot.sendMessage(this.getChatID(originalJSON), text);
+    } else if(commandSource === this.slack) {
       slackBot.postMessageToChannel('telegram', text ,{icon_url: 'https://raw.githubusercontent.com/telegramdesktop/tdesktop/master/Telegram/Resources/art/icon128.png'});
     }
   }
 
-  private static getChatID(json) {
+  getChatID(json) {
     return json.message.chat.id;
   }
 
