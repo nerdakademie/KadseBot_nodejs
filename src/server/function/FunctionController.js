@@ -2,11 +2,12 @@
 const echo = require('./modules/echo');
 const error = require('./modules/error');
 const debug = require('./modules/debug');
+const decide = require('./modules/decide');
 
 module.exports = class FunctionController {
 
   constructor(){
-    this.moduleList = [new echo(), new debug()];
+    this.moduleList = [new echo(), new debug(), new decide()];
     this.error = new error();
     this.botName = 'KadseBot'
   }
@@ -45,7 +46,6 @@ module.exports = class FunctionController {
     } else {
       command = this.getCommand(JsonData.message.text);
     }
-    console.log('after getCommand'.concat(command));
 
     const payload= {};
     payload.original = JsonData;
