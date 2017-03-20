@@ -38,13 +38,13 @@ module.exports = class FunctionController {
     if (typeof JsonData.message.text === 'undefined') {
       command = 'undefined';
     } else {
-      command = getCommand(JsonData.message.text);
+      command = this.getCommand(JsonData.message.text);
     }
     console.log('after getCommand'.concat(command));
 
     const payload= {};
     payload.original = JsonData;
-    payload.parameters = getParams(JsonData);
+    payload.parameters = this.getParams(JsonData);
 
     for(const module in this.moduleList) {
       if(`/${module.getCommand()}` === command) {
