@@ -1,11 +1,12 @@
 'use strict';
 const echo = require('./modules/echo');
 const error = require('./modules/error');
+const debug = require('./modules/debug');
 
 module.exports = class FunctionController {
 
   constructor(){
-    this.moduleList = [new echo()];
+    this.moduleList = [new echo(), new debug()];
     this.error = new error();
     this.botName = 'KadseBot'
   }
