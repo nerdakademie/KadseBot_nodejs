@@ -12,7 +12,7 @@ module.exports = class error extends Module {
   }
 
   executeCommand(commandSource, payload){
-    Module.sendMessage(commandSource, 'Kadse verwirrt. Kadse kennt nicht!', payload.original);
+    super.sendMessage(commandSource, 'Kadse verwirrt. Kadse kennt nicht!', payload.original);
   }
 
 };

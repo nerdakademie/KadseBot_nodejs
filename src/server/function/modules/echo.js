@@ -11,7 +11,7 @@ module.exports = class echo extends Module {
   }
 
   executeCommand(commandSource, payload){
-    Module.sendMessage(commandSource, payload.text, payload.original);
+    super.sendMessage(commandSource, payload.text, payload.original);
   }
 
 };
