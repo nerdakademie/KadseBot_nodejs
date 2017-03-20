@@ -48,7 +48,11 @@ module.exports = class FunctionController {
 
     const payload= {};
     payload.original = JsonData;
-    payload.parameters = this.getParams(JsonData);
+    if(commandSource === 0) {
+      payload.parameters = this.getParams(JsonData.text);
+    } else if(commandSource === 1) {
+      payload.parameters = this.getParams(JsonData.message.text);
+    }
 
     for(const module in this.moduleList) {
       if(`/${module.getCommand()}` === command) {
