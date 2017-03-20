@@ -5,7 +5,6 @@ const error = require('./modules/error');
 module.exports = class FunctionController {
 
   constructor(){
-    super();
     this.moduleList = [new echo];
     this.error = new error;
   }
