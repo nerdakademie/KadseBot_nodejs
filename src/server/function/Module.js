@@ -9,23 +9,22 @@ const slackBot = new SlackBot({
 
 module.exports = class Module {
 
-
   constructor() {
     if (this.constructor === Module) {
-      throw new TypeError("Can not construct abstract class.");
+      throw new TypeError('Can not construct abstract class.');
     }
     if (this.getCommand === Module.prototype.getCommand) {
-      throw new TypeError("Please implement abstract method getCommand.");
+      throw new TypeError('Please implement abstract method getCommand.');
     }
     if (this.executeCommand === Module.prototype.executeCommand) {
-      throw new TypeError("Please implement abstract method executeCommand.");
+      throw new TypeError('Please implement abstract method executeCommand.');
     }
     this.slack = 0;
-    this.telegram = 1
+    this.telegram = 1;
   }
   // An abstract method.
   getCommand() {
-    throw new TypeError("Do not call abstract method foo from child.");
+    throw new TypeError('Do not call abstract method foo from child.');
   }
 
   /*
@@ -36,14 +35,14 @@ module.exports = class Module {
    */
 
   executeCommand(commandSource, payload) {
-    throw new TypeError("Do not call abstract method foo from child.");
+    throw new TypeError('Do not call abstract method foo from child.');
   }
 
   sendMessage(commandSource, text, originalJSON) {
-    if(commandSource === this.telegram) {
+    if (commandSource === this.telegram) {
       telegramBot.sendMessage(this.getChatID(originalJSON), text);
-    } else if(commandSource === this.slack) {
-      slackBot.postMessageToChannel('telegram', text ,{icon_url: 'https://raw.githubusercontent.com/telegramdesktop/tdesktop/master/Telegram/Resources/art/icon128.png'});
+    } else if (commandSource === this.slack) {
+      slackBot.postMessageToChannel('telegram', text, {icon_url: 'https://raw.githubusercontent.com/telegramdesktop/tdesktop/master/Telegram/Resources/art/icon128.png'});
     }
   }
 
