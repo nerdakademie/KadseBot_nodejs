@@ -15,7 +15,7 @@ module.exports = class engage extends Module {
       if (counter === 5) {
         clearInterval(engagingTask);
       }
-    }, 500);
+    }, 1000);
   }
 
 };
