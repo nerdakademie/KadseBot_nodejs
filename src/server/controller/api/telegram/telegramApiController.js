@@ -14,20 +14,19 @@ module.exports = (() => {
 
   function webHook(request, response) {
     const json = request.body;
-    const {text} = request.body.message;
-    const {id}  = request.body.message.chat;
-    if(StringHelper.isNullOrEmptyString(text)) {
-      return response.status(400).json({success: false,
-        error: {text: 'No message text supplied'}});
-    }
+    const {text} = json.message;
+    const {id}  = json.message.chat;
+    if(!StringHelper.isNullOrEmptyString(text)) {
     if(text.substring(0,1) === '/') {
       new FunctionController().executeCommand(1, json);
       //TelegramHelper.executeCommand(json);
     } else {
       if(id === config.get('telegram_chat_id')) {
-        SlackHelper.sendMessageFromTelegram(request.body);
+        SlackHelper.sendMessageFromTelegram(json);
       }
     }
+    }
+    //TODO:make other types work (Stickers, Photos, Files)
     response.end();
   }
   return {
